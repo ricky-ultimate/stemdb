@@ -8,21 +8,22 @@ generator client {
 }
 
 model Member {
-  id        Int      @id @default(autoincrement())
+  id        Int       @id @default(autoincrement())
   firstName String
   lastName  String
-  matricno  String   @unique
-  email     String   @unique
+  matricno  String    @unique
+  email     String    @unique
   role      String
+  projects  Project[] @relation("ProjectMembers")
 }
 
 model Project {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   title       String
   description String
   startDate   DateTime
   endDate     DateTime?
-  members     Member[]
+  members     Member[]  @relation("ProjectMembers")
 }
 
 model Event {
