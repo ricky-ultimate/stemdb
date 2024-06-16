@@ -34,3 +34,11 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
     });
     res.status(200).json(member);
   }
+
+  async function deleteMember(req: NextApiRequest, res: NextApiResponse) {
+    const { id } = req.body;
+    await prisma.member.delete({
+      where: { id: parseInt(id) },
+    });
+    res.status(204).end();
+  }
