@@ -49,3 +49,25 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
     });
     res.status(204).end();
   }
+
+
+  export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+    switch (req.method) {
+      case 'GET':
+        await getProjects(req, res);
+        break;
+      case 'POST':
+        await createProject(req, res);
+        break;
+      case 'PUT':
+      case 'PATCH':
+        await updateProject(req, res);
+        break;
+      case 'DELETE':
+        await deleteProject(req, res);
+        break;
+      default:
+        res.setHeader('Allow', ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);
+        res.status(405).end(`Method ${req.method} Not Allowed`);
+    }
+  }
