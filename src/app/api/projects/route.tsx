@@ -22,7 +22,7 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
     const projects = await prisma.project.findMany();
     res.status(200).json(projects);
   }
-  
+
 
   async function updateProject(req: NextApiRequest, res: NextApiResponse) {
     const { id, title, description, startDate, endDate, members } = req.body;
@@ -39,4 +39,13 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     res.status(200).json(project);
+  }
+
+
+  async function deleteProject(req: NextApiRequest, res: NextApiResponse) {
+    const { id } = req.body;
+    await prisma.project.delete({
+      where: { id: parseInt(id) },
+    });
+    res.status(204).end();
   }
