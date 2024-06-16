@@ -33,17 +33,24 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
 
   async function updateMember(req: NextApiRequest, res: NextApiResponse) {
     const { id, firstName, lastName, matricno, email, role } = req.body;
-    const member = await prisma.member.update({
-      where: { id: parseInt(id) },
-      data: {
-        firstName,
-        lastName,
-        matricno,
-        email,
-        role,
-      },
-    });
-    res.status(200).json(member);
+    if (!id || !firstName || !lastName || !matricno || !email || !role) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    try {
+      const member = await prisma.member.update({
+        where: { id: parseInt(id) },
+        data: {
+          firstName,
+          lastName,
+          matricno,
+          email,
+          role,
+        },
+      });
+      res.status(200).json(member);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update member' });
+    }
   }
 
   async function deleteMember(req: NextApiRequest, res: NextApiResponse) {
