@@ -23,8 +23,12 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
   }
 
   async function getMembers(req: NextApiRequest, res: NextApiResponse) {
-    const members = await prisma.member.findMany();
-    res.status(200).json(members);
+    try {
+      const members = await prisma.member.findMany();
+      res.status(200).json(members);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to fetch members' });
+    }
   }
 
   async function updateMember(req: NextApiRequest, res: NextApiResponse) {
