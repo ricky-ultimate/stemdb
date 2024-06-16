@@ -55,10 +55,17 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
 
   async function deleteMember(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.body;
-    await prisma.member.delete({
-      where: { id: parseInt(id) },
-    });
-    res.status(204).end();
+    if (!id) {
+      return res.status(400).json({ error: 'ID is required' });
+    }
+    try {
+      await prisma.member.delete({
+        where: { id: parseInt(id) },
+      });
+      res.status(204).end();
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to delete member' });
+    }
   }
 
   export default async function handler(req: NextApiRequest, res: NextApiResponse) {
