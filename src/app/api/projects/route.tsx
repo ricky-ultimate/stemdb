@@ -17,7 +17,26 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
     res.status(201).json(project);
   }
 
+
   async function getProjects(req: NextApiRequest, res: NextApiResponse) {
     const projects = await prisma.project.findMany();
     res.status(200).json(projects);
+  }
+  
+
+  async function updateProject(req: NextApiRequest, res: NextApiResponse) {
+    const { id, title, description, startDate, endDate, members } = req.body;
+    const project = await prisma.project.update({
+      where: { id: parseInt(id) },
+      data: {
+        title,
+        description,
+        startDate: new Date(startDate),
+        endDate: endDate ? new Date(endDate) : null,
+        members: {
+          set: members.map((memberId: number) => ({ id: memberId })),
+        },
+      },
+    });
+    res.status(200).json(project);
   }
