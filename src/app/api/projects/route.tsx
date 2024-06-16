@@ -48,10 +48,17 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
 
   async function deleteProject(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.body;
-    await prisma.project.delete({
-      where: { id: parseInt(id) },
-    });
-    res.status(204).end();
+    if (!id) {
+      return res.status(400).json({ error: 'ID is required' });
+    }
+    try {
+      await prisma.project.delete({
+        where: { id: parseInt(id) },
+      });
+      res.status(204).end();
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to delete project' });
+    }
   }
 
 
