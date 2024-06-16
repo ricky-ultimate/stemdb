@@ -41,22 +41,6 @@ export default function Navbar() {
    </div>
     </div>
 
-
-
-   {/* <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
-    <a className="navbar-brand" href="#">Navbar</a>
-    <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#">
-      <span className="navbar-toggler-icon">Database</span>
-      </button>
-
-<li className="nav-item active">
-      <a className="nav-link" href="#">Home <span className="sr-only">(current)
-        </span></a>
-
-    </li>
-   </nav> */}
-
-
     </>
 
   );

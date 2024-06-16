@@ -1,9 +1,9 @@
-import React from 'react';
+import React from 'react'
 
-const LeftNav = () => {
+export default function leftnavbar() {
   return (
-    <></>
-  );
-};
-
-export default LeftNav;
+    <div>
+      
+    </div>
+  )
+}
