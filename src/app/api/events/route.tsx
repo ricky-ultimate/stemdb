@@ -19,3 +19,18 @@ async function createEvent(req: NextApiRequest, res: NextApiResponse) {
     const events = await prisma.event.findMany();
     res.status(200).json(events);
   }
+
+
+  async function updateEvent(req: NextApiRequest, res: NextApiResponse) {
+    const { id, name, date, location, description } = req.body;
+    const event = await prisma.event.update({
+      where: { id: parseInt(id) },
+      data: {
+        name,
+        date: new Date(date),
+        location,
+        description,
+      },
+    });
+    res.status(200).json(event);
+  }
