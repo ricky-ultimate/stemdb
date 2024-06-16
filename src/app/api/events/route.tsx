@@ -34,3 +34,12 @@ async function createEvent(req: NextApiRequest, res: NextApiResponse) {
     });
     res.status(200).json(event);
   }
+
+
+  async function deleteEvent(req: NextApiRequest, res: NextApiResponse) {
+    const { id } = req.body;
+    await prisma.event.delete({
+      where: { id: parseInt(id) },
+    });
+    res.status(204).end();
+  }
