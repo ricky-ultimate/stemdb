@@ -3,16 +3,23 @@ import prisma from "../../../../prisma/prisma/prisma";
 
 async function createMember(req: NextApiRequest, res: NextApiResponse) {
     const { firstName, lastName, matricno, email, role } = req.body;
-    const member = await prisma.member.create({
-      data: {
-        firstName,
-        lastName,
-        matricno,
-        email,
-        role,
-      },
-    });
-    res.status(201).json(member);
+    if (!firstName || !lastName || !matricno || !email || !role) {
+      return res.status(400).json({ error: 'All fields are required' });
+    }
+    try {
+      const member = await prisma.member.create({
+        data: {
+          firstName,
+          lastName,
+          matricno,
+          email,
+          role,
+        },
+      });
+      res.status(201).json(member);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to create member' });
+    }
   }
 
   async function getMembers(req: NextApiRequest, res: NextApiResponse) {
