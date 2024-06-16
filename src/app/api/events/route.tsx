@@ -13,3 +13,9 @@ async function createEvent(req: NextApiRequest, res: NextApiResponse) {
     });
     res.status(201).json(event);
   }
+
+
+  async function getEvents(req: NextApiRequest, res: NextApiResponse) {
+    const events = await prisma.event.findMany();
+    res.status(200).json(events);
+  }
