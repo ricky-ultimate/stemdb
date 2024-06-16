@@ -19,3 +19,18 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
     const members = await prisma.member.findMany();
     res.status(200).json(members);
   }
+
+  async function updateMember(req: NextApiRequest, res: NextApiResponse) {
+    const { id, firstName, lastName, matricno, email, role } = req.body;
+    const member = await prisma.member.update({
+      where: { id: parseInt(id) },
+      data: {
+        firstName,
+        lastName,
+        matricno,
+        email,
+        role,
+      },
+    });
+    res.status(200).json(member);
+  }
