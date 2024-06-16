@@ -14,3 +14,8 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
     });
     res.status(201).json(member);
   }
+
+  async function getMembers(req: NextApiRequest, res: NextApiResponse) {
+    const members = await prisma.member.findMany();
+    res.status(200).json(members);
+  }
