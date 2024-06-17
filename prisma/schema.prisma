@@ -7,14 +7,21 @@ generator client {
   provider = "prisma-client-js"
 }
 
+enum Role {
+  USER
+  ADMIN
+  SUPERADMIN
+}
+
 model Member {
-  id        Int       @id @default(autoincrement())
+  id        Int         @id @default(autoincrement())
   firstName String
   lastName  String
-  matricno  String    @unique
-  email     String    @unique
-  role      String
-  projects  Project[] @relation("ProjectMembers")
+  matricno  String      @unique
+  email     String      @unique
+  password  String
+  role      Role        @default(USER)
+  projects  Project[]   @relation("ProjectMembers")
 }
 
 model Project {
@@ -27,7 +34,7 @@ model Project {
 }
 
 model Event {
-  id          Int      @id @default(autoincrement())
+  id          Int       @id @default(autoincrement())
   name        String
   date        DateTime
   location    String
