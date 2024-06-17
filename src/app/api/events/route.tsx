@@ -32,8 +32,12 @@ async function getEvents(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-  async function updateEvent(req: NextApiRequest, res: NextApiResponse) {
-    const { id, name, date, location, description } = req.body;
+async function updateEvent(req: NextApiRequest, res: NextApiResponse) {
+  const { id, name, date, location, description } = req.body;
+  if (!id || !name || !date || !location || !description) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+  try {
     const event = await prisma.event.update({
       where: { id: parseInt(id) },
       data: {
@@ -44,7 +48,10 @@ async function getEvents(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     res.status(200).json(event);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to update event' });
   }
+}
 
 
   async function deleteEvent(req: NextApiRequest, res: NextApiResponse) {
