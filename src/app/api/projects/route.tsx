@@ -41,19 +41,30 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
 
   async function updateProject(req: NextApiRequest, res: NextApiResponse) {
     const { id, title, description, startDate, endDate, members } = req.body;
-    const project = await prisma.project.update({
-      where: { id: parseInt(id) },
-      data: {
-        title,
-        description,
-        startDate: new Date(startDate),
-        endDate: endDate ? new Date(endDate) : null,
-        members: {
-          set: members.map((memberId: number) => ({ id: memberId })),
+    if (!id || !title || !description || !startDate || !members) {
+      return res.status(400).json({ error: 'ID, title, description, startDate, and members are required' });
+    }
+    try {
+      const validMembers = await prisma.member.findMany({ where: { id: { in: members } } });
+      if (validMembers.length !== members.length) {
+        return res.status(400).json({ error: 'Some member IDs are invalid' });
+      }
+      const project = await prisma.project.update({
+        where: { id: parseInt(id) },
+        data: {
+          title,
+          description,
+          startDate: new Date(startDate),
+          endDate: endDate ? new Date(endDate) : null,
+          members: {
+            set: members.map((memberId: number) => ({ id: memberId })),
+          },
         },
-      },
-    });
-    res.status(200).json(project);
+      });
+      res.status(200).json(project);
+    } catch (error) {
+      res.status(500).json({ error: 'Failed to update project' });
+    }
   }
 
 
