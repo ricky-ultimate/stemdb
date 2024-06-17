@@ -54,13 +54,20 @@ async function updateEvent(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-  async function deleteEvent(req: NextApiRequest, res: NextApiResponse) {
-    const { id } = req.body;
+async function deleteEvent(req: NextApiRequest, res: NextApiResponse) {
+  const { id } = req.body;
+  if (!id) {
+    return res.status(400).json({ error: 'ID is required' });
+  }
+  try {
     await prisma.event.delete({
       where: { id: parseInt(id) },
     });
     res.status(204).end();
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to delete event' });
   }
+}
 
 
   export default async function handler(req: NextApiRequest, res: NextApiResponse) {
