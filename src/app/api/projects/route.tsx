@@ -2,7 +2,15 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma/prisma/prisma";
 
 async function createProject(req: NextApiRequest, res: NextApiResponse) {
-    const { title, description, startDate, endDate, members } = req.body;
+  const { title, description, startDate, endDate, members } = req.body;
+  if (!title || !description || !startDate || !members) {
+    return res.status(400).json({ error: 'Title, description, startDate, and members are required' });
+  }
+  try {
+    const validMembers = await prisma.member.findMany({ where: { id: { in: members } } });
+    if (validMembers.length !== members.length) {
+      return res.status(400).json({ error: 'Some member IDs are invalid' });
+    }
     const project = await prisma.project.create({
       data: {
         title,
@@ -15,7 +23,10 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     res.status(201).json(project);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create project' });
   }
+}
 
 
   async function getProjects(req: NextApiRequest, res: NextApiResponse) {
