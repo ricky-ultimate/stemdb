@@ -2,7 +2,11 @@ import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma/prisma/prisma";
 
 async function createEvent(req: NextApiRequest, res: NextApiResponse) {
-    const { name, date, location, description } = req.body;
+  const { name, date, location, description } = req.body;
+  if (!name || !date || !location || !description) {
+    return res.status(400).json({ error: 'All fields are required' });
+  }
+  try {
     const event = await prisma.event.create({
       data: {
         name,
@@ -12,7 +16,10 @@ async function createEvent(req: NextApiRequest, res: NextApiResponse) {
       },
     });
     res.status(201).json(event);
+  } catch (error) {
+    res.status(500).json({ error: 'Failed to create event' });
   }
+}
 
 
   async function getEvents(req: NextApiRequest, res: NextApiResponse) {
