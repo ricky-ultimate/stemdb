@@ -1,5 +1,12 @@
 import Link from 'next/link';
 import Head from 'next/head';
+import { Metadata } from 'next';
+
+
+export const metadata: Metadata = {
+  title: 'Sign In',
+}
+
 
 export default function SignIn() {
     return (
@@ -28,7 +35,7 @@ export default function SignIn() {
                             />
                             <a href="#" className="text-purple-600 text-sm">Forgot your password?</a>
                             
-                            <Link href="/dashboard"type="submit" className="p-3 bg-purple-600 rounded-md text-white text-center">
+                            <Link href="/AdminDashboard"type="submit" className="p-3 bg-purple-600 rounded-md text-white text-center">
                                 Log In
                             </Link>
                             
