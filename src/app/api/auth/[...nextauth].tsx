@@ -46,6 +46,6 @@ export default NextAuth({
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
-    jwt: true,
+    strategy: 'jwt',
   },
 });
