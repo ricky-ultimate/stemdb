@@ -26,7 +26,7 @@ export default NextAuth({
         if (user && bcrypt.compareSync(credentials?.password, user.password)) {
           return {
             ...user,
-            id: user.id.toString(),
+            id: user.id.toString(),  //converts id to string before returning it to the user
           };
         } else {
           return null;

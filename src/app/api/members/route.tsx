@@ -14,6 +14,7 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
           matricno,
           email,
           role,
+          password: '123456789',
         },
       });
       res.status(201).json(member);
