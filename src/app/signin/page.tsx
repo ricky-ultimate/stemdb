@@ -35,7 +35,7 @@ export default function SignIn() {
                             />
                             <a href="#" className="text-purple-600 text-sm">Forgot your password?</a>
                             
-                            <Link href="/AdminDashboard"type="submit" className="p-3 bg-purple-600 rounded-md text-white text-center">
+                            <Link href="/AdminDashboard/main"type="submit" className="p-3 bg-purple-600 rounded-md text-white text-center">
                                 Log In
                             </Link>
                             
