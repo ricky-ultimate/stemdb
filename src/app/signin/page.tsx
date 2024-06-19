@@ -1,9 +1,10 @@
+"use client";
 import Link from 'next/link';
 import Head from 'next/head';
 import { Metadata } from 'next';
 import { signIn } from 'next-auth/react';
 import { useState } from 'react';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 
 
 export const metadata: Metadata = {
