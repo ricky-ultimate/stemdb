@@ -12,7 +12,7 @@ export default function SignIn() {
     return (
         <>
             
-            <div className="bg-gray-200 h-screen flex items-center justify-center">
+            {/* <div className="bg-gray-200 h-screen flex items-center justify-center">
 
                 <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto p-4 ">
                     <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-8">
@@ -43,7 +43,7 @@ export default function SignIn() {
                         </form>
                     </div>
                 </div>
-            </div>
+            </div> */}
 
         
 
@@ -107,7 +107,7 @@ export default function SignIn() {
 
 
 
-            {/* <div className="bg-cover bg-center h-screen flex items-center justify-center" style={{backgroundImage: "url('./static/bg.png')"}}>
+            <div className="bg-cover bg-center h-screen flex items-center justify-center" style={{backgroundImage: "url('./static/bg.png')"}}>
       <div className="bg-blue p-8 rounded-lg shadow-lg max-w-2xl">
         <h1 className="text-2xl font-bold mb-4 text-center text-green-600">SIGN IN</h1>
         <form>
@@ -122,7 +122,7 @@ export default function SignIn() {
           <button type="submit" className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700">Sign In</button>
         </form>
       </div>
-    </div> */}
+    </div>
         </>
     );
 }
