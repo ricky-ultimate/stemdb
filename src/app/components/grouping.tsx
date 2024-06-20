@@ -9,9 +9,15 @@ const Grouping = () => {
         <div className="bg-white/10 col-span-9 rounded-lg p-6">
 
 
+<<<<<<< HEAD
             {/* Group */}
             <div id="Group">
                 <h1 className="font-bold py-4 uppercase">GUAP Group</h1>
+=======
+            {/* Profile */}
+            <div id="Group">
+                <h1 className="font-bold py-4 uppercase">Group #</h1>
+>>>>>>> 5de1b8b (made some changes (actuall a lot))
                 <div id="stats" className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6">
 
                     <div className="flex bg-black shadow-lg rounded-lg overflow-hidden">
@@ -51,6 +57,7 @@ const Grouping = () => {
             </div>
 
 
+<<<<<<< HEAD
             <div id="last-users">
                 <h1 className="font-bold py-4 uppercase">Last 24h users</h1>
                 <div className="overflow-x-scroll">
@@ -204,6 +211,8 @@ const Grouping = () => {
             </div>
 
 
+=======
+>>>>>>> 5de1b8b (made some changes (actuall a lot))
          
 
 
