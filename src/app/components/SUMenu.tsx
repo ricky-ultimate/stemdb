@@ -51,7 +51,7 @@ const MenuSU = () => (
             </div>
         </a>
 
-               {/* Ranking */}
+        {/* Ranking */}
         <a href="/SUDashboard/rank" className="flex flex-col space-y-2 md:space-y-0 md:flex-row mb-1 items-center md:space-x-2 hover:bg-white/10 group transition duration-150 ease-linear rounded-lg group w-full py-3 px-2">
             <div className='items-center'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-graph-up-arrow group-hover:text-indigo-400" viewBox="0 0 16 16">

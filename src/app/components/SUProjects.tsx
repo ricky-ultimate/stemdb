@@ -1,6 +1,6 @@
 "use client";
 
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, SetStateAction, useState } from 'react';
 
 const SUProjects = () => {
     const [tasks, setTasks] = useState([
@@ -27,6 +27,8 @@ const SUProjects = () => {
         setNewTaskName('');
     };
 
+
+
     const handleEditTask = (task: { id: number; name: string; status: string }) => {
         setEditingTask(task.id);
         setEditingName(task.name);
@@ -46,32 +48,28 @@ const SUProjects = () => {
         setTasks(tasks.filter(task => task.id !== id));
     };
 
+
+
     const initialUsers = [
-        { id: 1, name: 'Fat Spaghetti', group: 'Cyber Sec.', status: 'Pending' },
+        { id: 1, name: 'Fat Spagetti', group: 'Cyber Sec.', status: 'Pending' },
         { id: 2, name: 'Space Dad', group: 'Charity', status: 'Finished' },
     ];
 
     const [users, setUsers] = useState(initialUsers);
-    const [newUser, setNewUser] = useState({ name: '', group: '', status: '' });
-    const [editingId, setEditingId] = useState<number | null>(null);
+    const [editingId, setEditingId] = useState(null);
     const [editUser, setEditUser] = useState({ name: '', group: '', status: '' });
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
         const value = e.target.value;
-        if (editingId !== null) {
-            setEditUser(prevState => ({ ...prevState, [field]: value }));
-        } else {
-            setNewUser(prevState => ({ ...prevState, [field]: value }));
-        }
+        setEditUser(prevState => ({ ...prevState, [field]: value }));
     };
 
     const addRow = () => {
-        if (!newUser.name.trim() || !newUser.group.trim() || !newUser.status.trim()) return;
-        setUsers([...users, { id: users.length + 1, ...newUser }]);
-        setNewUser({ name: '', group: '', status: '' });
+        setUsers([...users, { id: users.length + 1, ...editUser }]);
+        setEditUser({ name: '', group: '', status: '' });
     };
 
-    const editRow = (user: { id: number; name: string; group: string; status: string }) => {
+    const editRow = (user: { id: any; name: any; group: any; status: any; }) => {
         setEditingId(user.id);
         setEditUser({ name: user.name, group: user.group, status: user.status });
     };
@@ -118,7 +116,7 @@ const SUProjects = () => {
                             </button>
                             <button onClick={() => deleteRow(user.id)} className="px-2 py-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="w-5 h-5 bi bi-trash hover:text-red-600" viewBox="0 0 16 16">
-                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z" />
+                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
                                     <path d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                                 </svg>
                             </button>
@@ -131,7 +129,11 @@ const SUProjects = () => {
 
     return (
         <div className="bg-white/10 col-span-9 rounded-lg p-6">
+
+         
+            {/* Projects */}
             <h1 className="font-bold py-4 uppercase">Projects</h1>
+
             <div className="overflow-x-auto overflow-y-auto max-h-52">
                 <table className="w-full whitespace-nowrap">
                     <caption className="sr-only">User Information Table</caption>
@@ -149,13 +151,20 @@ const SUProjects = () => {
                 </table>
             </div>
             <div className="mt-4">
-                <input className="bg-white/5 rounded-md text-white w-30 mr-2" value={newUser.name} onChange={(e) => handleInputChange(e, 'name')} placeholder="New Project" />
-                <input className="bg-white/5 rounded-md text-white w-20 mr-2" value={newUser.group} onChange={(e) => handleInputChange(e, 'group')} placeholder="Group" />
-                <input className="bg-white/5 rounded-md text-white w-20 mr-2" value={newUser.status} onChange={(e) => handleInputChange(e, 'status')} placeholder="Status" />
+                <input className="bg-white/5 rounded-md text-white w-30 mr-2" value={editUser.name} onChange={(e) => handleInputChange(e, 'name')} placeholder="Project" />
+                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.group} onChange={(e) => handleInputChange(e, 'group')} placeholder="Group" />
+                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.status} onChange={(e) => handleInputChange(e, 'status')} placeholder="Status" />
                 <button onClick={addRow} className="px-4 py-1 bg-black text-white rounded-lg">Add</button>
             </div>
-        </div>
-    );
-};
 
+
+
+
+
+
+
+        </div>
+    )
+};
 export default SUProjects;
+
