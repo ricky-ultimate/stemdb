@@ -37,11 +37,11 @@ export default function SignIn() {
       }
     }
   };
-  
-    return (
-        <>
-            
-            <div className="bg-gray-200 h-screen flex items-center justify-center">
+
+  return (
+    <>
+
+      <div className="bg-gray-200 h-screen flex items-center justify-center">
         <div className="flex flex-col md:flex-row w-full max-w-6xl mx-auto p-4">
           <div className="flex flex-col justify-center items-center w-full md:w-1/2 p-8">
             <h1 className="text-4xl font-bold mb-4 text-black">
@@ -73,11 +73,11 @@ export default function SignIn() {
           </div>
         </div>
       </div>
-        
 
 
 
-            {/* <div className="flex h-screen items-center justify-center bg-gray-100">
+
+      {/* <div className="flex h-screen items-center justify-center bg-gray-100">
       <div className="flex flex-col md:flex-row bg-white shadow-lg rounded-lg overflow-hidden">
         <div className="md:w-1/2 p-5 flex items-center justify-center">
           <img src="./static/background.jpg" alt="Login Illustration" />
@@ -135,7 +135,7 @@ export default function SignIn() {
 
 
 
-            {/* <div className="bg-cover bg-center h-screen flex items-center justify-center" style={{backgroundImage: "url('./static/bg.png')"}}>
+      {/* <div className="bg-cover bg-center h-screen flex items-center justify-center" style={{backgroundImage: "url('./static/bg.png')"}}>
       <div className="bg-blue p-8 rounded-lg shadow-lg max-w-2xl">
         <h1 className="text-2xl font-bold mb-4 text-center text-green-600">SIGN IN</h1>
         <form>
@@ -151,6 +151,6 @@ export default function SignIn() {
         </form>
       </div>
     </div> */}
-        </>
-    );
+    </>
+  );
 }
