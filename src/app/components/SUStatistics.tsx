@@ -1,4 +1,4 @@
-const Statistics = () => (
+const SUStatistics = () => (
     <div className="bg-white/10 col-span-9 rounded-lg p-6">
 
         {/* top of the right side of the dashboard */}
@@ -98,7 +98,7 @@ const Statistics = () => (
                         </div>
                     </div>
                     <div className="border-t border-white/5 p-4">
-                        <a href="/UserDashboard/group" className="inline-flex space-x-2 items-center text-center">
+                        <a href="/SUDashboard/group" className="inline-flex space-x-2 items-center text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                             </svg>
@@ -121,7 +121,7 @@ const Statistics = () => (
                         </div>
                     </div>
                     <div className="border-t border-white/5 p-4">
-                        <a href="/UserDashboard/group" className="inline-flex space-x-2 items-center text-center">
+                        <a href="/SUDashboard/group" className="inline-flex space-x-2 items-center text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                             </svg>
@@ -144,7 +144,7 @@ const Statistics = () => (
                         </div>
                     </div>
                     <div className="border-t border-white/5 p-4">
-                        <a href="/UserDashboard/group" className="inline-flex space-x-2 items-center text-center">
+                        <a href="/SUDashboard/group" className="inline-flex space-x-2 items-center text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                             </svg>
@@ -166,7 +166,7 @@ const Statistics = () => (
                         </div>
                     </div>
                     <div className="border-t border-white/5 p-4">
-                        <a href="/UserDashboard/group" className="inline-flex space-x-2 items-center text-center">
+                        <a href="#" className="inline-flex space-x-2 items-center text-center">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" className="w-6 h-6">
                                 <path stroke-linecap="round" stroke-linejoin="round" d="M11.25 11.25l.041-.02a.75.75 0 011.063.852l-.708 2.836a.75.75 0 001.063.853l.041-.021M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9-3.75h.008v.008H12V8.25z" />
                             </svg>
@@ -289,4 +289,4 @@ const Statistics = () => (
     </div>
 );
 
-export default Statistics;
+export default SUStatistics;
