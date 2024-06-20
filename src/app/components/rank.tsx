@@ -11,7 +11,7 @@ const Ranks = () => {
             {/* Profile */}
             <div id="Rank">
                 <div>
-                    <h1 className="font-bold py-4 uppercase">Top Ranking</h1>
+                    <h1 className="font-bold py-4 uppercase">Top Ranked</h1>
                     <div id="stats" className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 overflow-y-auto">
                         <div className="flex bg-black shadow-lg rounded-lg overflow-hidden relative">
                             <img src="/static/user1.jpg" className="object-cover w-32 h-32 rounded-l-lg" alt="Profile Picture" />
@@ -224,7 +224,7 @@ const Ranks = () => {
 
 
                 <div>
-                    <h1 className="font-bold py-4 uppercase">Worst Ranked</h1>
+                    <h1 className="font-bold py-4 uppercase">Last Ranked</h1>
                     <div id="stats" className="grid grid-cols-1 md:grid-cols-1 lg:grid-cols-1 gap-6 overflow-y-auto">
                         <div className="flex bg-black shadow-lg rounded-lg overflow-hidden relative">
                             <img src="/static/user1.jpg" className="object-cover w-32 h-32 rounded-l-lg" alt="Profile Picture" />
