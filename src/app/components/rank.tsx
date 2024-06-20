@@ -229,8 +229,8 @@ const Ranks = () => {
                         <div className="flex bg-black shadow-lg rounded-lg overflow-hidden relative">
                             <img src="/static/user1.jpg" className="object-cover w-32 h-32 rounded-l-lg" alt="Profile Picture" />
                             <div className="flex flex-col justify-center ml-4 flex-grow">
-                                <h2 className="text-xl font-bold text-white">Space Dad</h2>
-                                <p className="text-gray-500 font-medium">Cyber Security</p>
+                                <h2 className="text-xl font-bold text-white">Celestine Okonkwo</h2>
+                                <p className="text-gray-500 font-medium">Comp. Science</p>
                                 <p className="text-gray-500 text-sm">200 Level</p>
                             </div>
                             <div className="m-8">
