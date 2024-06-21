@@ -16,6 +16,7 @@ export default NextAuth({
       authorize: async (credentials) => {
 
         if (!credentials || !credentials.matricno || !credentials.password) {
+            console.error('Missing Credentials');
             return null;
           }
 
@@ -29,6 +30,7 @@ export default NextAuth({
             id: user.id.toString(),  //converts id to string before returning it to the user
           };
         } else {
+          console.error('Invalid credentials');
           return null;
         }
       },
