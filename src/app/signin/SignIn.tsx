@@ -22,6 +22,7 @@ export default function SignIn() {
     });
 
     if (result?.error) {
+      console.error('Error during sign-in: ', result.error);
       alert(result.error);
     } else {
       // Fetch the current session data
