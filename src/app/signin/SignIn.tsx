@@ -30,6 +30,8 @@ export default function SignIn() {
       const data = await response.json();
       const userRole = data?.user?.role;
 
+      console.log('User Role: ', userRole); //log user role for debugging
+
       // Route the user based on their role
       if (userRole === 'ADMIN' || userRole === 'SUPERADMIN') {
         router.push('/AdminDashboard/main');
