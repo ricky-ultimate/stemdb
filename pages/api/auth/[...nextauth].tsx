@@ -14,29 +14,40 @@ export default NextAuth({
         password: { label: "Password", type: "password" },
       },
       authorize: async (credentials) => {
-
         if (!credentials || !credentials.matricno || !credentials.password) {
+          console.error('Missing credentials');
+          return null;
+        }
+
+        try {
+          const user = await prisma.member.findUnique({
+            where: { matricno: credentials.matricno },
+          });
+
+          if (user) {
+            const passwordMatch = bcrypt.compareSync(credentials.password, user.password);
+            if (passwordMatch) {
+              return {
+                ...user,
+                id: user.id.toString(), // Converts id to string before returning it to the user
+              };
+            } else {
+              console.error('Password does not match');
+              return null;
+            }
+          } else {
+            console.error('No user found with this matric number');
             return null;
           }
-
-        const user = await prisma.member.findUnique({
-          where: { matricno: credentials?.matricno },
-        });
-
-        if (user && bcrypt.compareSync(credentials?.password, user.password)) {
-          return {
-            ...user,
-            id: user.id.toString(),  //converts id to string before returning it to the user
-          };
-        } else {
+        } catch (error) {
+          console.error('Error in authorize function:', error);
           return null;
         }
       },
     }),
   ],
   callbacks: {
-     async session({ session, user }) {
-      // Add type guards to ensure user and session.user are defined
+    async session({ session, user }) {
       if (session.user && user) {
         session.user.id = user.id;
         session.user.role = user.role;
