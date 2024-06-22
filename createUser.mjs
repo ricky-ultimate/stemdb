@@ -5,14 +5,14 @@ const prisma = new PrismaClient();
 
 async function main() {
   const salt = bcrypt.genSaltSync(10);
-  const hashedPassword = bcrypt.hashSync('yourpassword', salt);
+  const hashedPassword = bcrypt.hashSync('123456', salt);
 
   const user = await prisma.member.create({
     data: {
-      firstName: 'John',
+      firstName: 'Jane',
       lastName: 'Doe',
       matricno: '123456',
-      email: 'john.doe@example.com',
+      email: 'jane.doe@example.com',
       password: hashedPassword, // Store hashed password
       role: 'ADMIN',
     },
