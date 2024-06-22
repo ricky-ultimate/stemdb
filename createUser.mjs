@@ -14,7 +14,7 @@ async function main() {
       matricno: '12345',
       email: 'new@user.com',
       password: hashedPassword, // Store hashed password
-      role: 'ABMIN',
+      role: 'ADMIN',
     },
   });
 
