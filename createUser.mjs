@@ -11,7 +11,7 @@ async function main() {
     data: {
       firstName: 'Jane',
       lastName: 'Doe',
-      matricno: '123456',
+      matricno: '1234567',
       email: 'jane.doe@example.com',
       password: hashedPassword, // Store hashed password
       role: 'ADMIN',
