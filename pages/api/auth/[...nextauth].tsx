@@ -28,8 +28,10 @@ export default NextAuth({
             const passwordMatch = bcrypt.compareSync(credentials.password, user.password);
             if (passwordMatch) {
               return {
-                ...user,
                 id: user.id.toString(), // Converts id to string before returning it to the user
+                email: user.email,
+                role: user.role,
+                name: `${user.firstName} ${user.lastName}`,
               };
             } else {
               console.error('Password does not match');
@@ -47,16 +49,30 @@ export default NextAuth({
     }),
   ],
   callbacks: {
-    async session({ session, user }) {
-      if (session.user && user) {
-        session.user.id = user.id;
-        session.user.role = user.role;
+    async session({ session, token }) {
+      console.log('Session callback - token:', token); // Add debugging information
+      if (session.user && token) {
+        session.user.id = token.id;
+        session.user.role = token.role;
+        session.user.name = token.name;
       }
+      console.log('Session callback - session:', session); // Add debugging information
       return session;
+    },
+    async jwt({ token, user }) {
+      if (user) {
+        token.id = user.id;
+        token.role = user.role;
+        token.name = user.name;
+      }
+      return token;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/signin',
   },
 });

@@ -36,7 +36,7 @@ model Project {
 }
 
 model Event {
-  id          Int       @id @default(autoincrement())
+  id          Int      @id @default(autoincrement())
   name        String
   date        DateTime
   location    String
@@ -44,17 +44,18 @@ model Event {
 }
 
 model Group {
-  id          Int           @id @default(autoincrement())
-  name        String
-  lead        Member        @relation("LeadMember", fields: [leadId], references: [id])
-  leadId      Int
-  members     GroupMember[]
+  id      Int           @id @default(autoincrement())
+  name    String
+  lead    Member        @relation("LeadMember", fields: [leadId], references: [id])
+  leadId  Int
+  members GroupMember[]
 }
 
 model GroupMember {
-  memberId    Int
-  groupId     Int
-  member      Member        @relation(fields: [memberId], references: [id])
-  group       Group         @relation(fields: [groupId], references: [id])
+  memberId Int
+  groupId  Int
+  member   Member @relation(fields: [memberId], references: [id])
+  group    Group  @relation(fields: [groupId], references: [id])
+
   @@id([memberId, groupId])
 }
