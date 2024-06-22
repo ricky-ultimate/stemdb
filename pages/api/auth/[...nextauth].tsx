@@ -48,15 +48,20 @@ export default NextAuth({
   ],
   callbacks: {
     async session({ session, user }) {
+      console.log('Session callback - user:', user); // Add debugging information
       if (session.user && user) {
         session.user.id = user.id;
         session.user.role = user.role;
       }
+      console.log('Session callback - session:', session); // Add debugging information
       return session;
     },
   },
   secret: process.env.NEXTAUTH_SECRET,
   session: {
     strategy: 'jwt',
+  },
+  pages: {
+    signIn: '/signin',
   },
 });
