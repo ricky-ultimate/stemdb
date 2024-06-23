@@ -11,10 +11,10 @@ async function main() {
     data: {
       firstName: 'New',
       lastName: 'User',
-      matricno: '12345',
-      email: 'new@user.com',
+      matricno: '1234',
+      email: 'new@.com',
       password: hashedPassword, // Store hashed password
-      role: 'ADMIN',
+      role: 'USER',
     },
   });
 
