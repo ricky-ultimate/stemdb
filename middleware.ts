@@ -18,6 +18,17 @@ export async function middleware(req: NextRequest) {
   }
 
 
+  // Handle lowercase admin dashboard route
+  if (pathname.toLowerCase() === '/admindashboard') {
+    return NextResponse.rewrite(new URL('/AdminDashboard', req.url));
+  }
+
+  // Handle lowercase user dashboard route
+  if (pathname.toLowerCase() === '/userdashboard') {
+    return NextResponse.rewrite(new URL('/UserDashboard', req.url));
+  }
+
+
   if (pathname.startsWith('/AdminDashboard')) {
     if (token.role !== 'ADMIN' && token.role !== 'SUPERADMIN') {
       console.log('ADMIN ROLE REQUIRED!');
@@ -35,5 +46,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/signin'],
-};
+    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/signin', '/admindashboard', '/userdashboard'],
+  };
