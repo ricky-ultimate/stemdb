@@ -11,10 +11,17 @@ async function main() {
     data: {
       firstName: 'New',
       lastName: 'User',
+<<<<<<< HEAD
       matricno: '123456',
       email: 'rand@user.com',
       password: hashedPassword, // Store hashed password
       role: 'SUPERADMIN',
+=======
+      matricno: '1234',
+      email: 'new@.com',
+      password: hashedPassword, // Store hashed password
+      role: 'USER',
+>>>>>>> e39386a ("Update createUser function: changed matricno to '1234', email to 'new@.com', and role to 'USER'")
     },
   });
 
