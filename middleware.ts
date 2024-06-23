@@ -18,6 +18,10 @@ export async function middleware(req: NextRequest) {
   }
 
 
+  if (pathname === '/superuser') {
+    return NextResponse.rewrite(new URL('/SUdashboard', req.url));
+  }
+
   // Handle lowercase admin dashboard route
   if (pathname.toLowerCase() === '/admindashboard') {
     return NextResponse.rewrite(new URL('/AdminDashboard', req.url));
@@ -36,15 +40,15 @@ export async function middleware(req: NextRequest) {
     }
   }
 
-//   if (pathname.startsWith('/superadmin')) {
-//     if (token.role !== 'SUPERADMIN') {
-//       return NextResponse.redirect(new URL('/UserDashboard', req.url));
-//     }
-//   }
+  if (pathname.startsWith('/SUDashboard')) {
+    if (token.role !== 'SUPERADMIN') {
+      return NextResponse.redirect(new URL('/UserDashboard', req.url));
+    }
+  }
 
   return NextResponse.next();
 }
 
 export const config = {
-    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/signin', '/admindashboard', '/userdashboard'],
+    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/SUDashboard/:path*', '/signin', '/admindashboard', '/userdashboard', '/superuser'],
   };
