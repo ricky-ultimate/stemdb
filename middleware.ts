@@ -13,12 +13,14 @@ export async function middleware(req: NextRequest) {
 
 
   if (!token) {
+    console.log('SIGN IN REQUIRED!');
     return NextResponse.redirect(new URL('/signin', req.url));
   }
 
 
   if (pathname.startsWith('/AdminDashboard')) {
     if (token.role !== 'ADMIN' && token.role !== 'SUPERADMIN') {
+      console.log('ADMIN ROLE REQUIRED!');
       return NextResponse.redirect(new URL('/UserDashboard', req.url));
     }
   }
