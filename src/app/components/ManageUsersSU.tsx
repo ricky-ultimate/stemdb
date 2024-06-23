@@ -130,37 +130,8 @@ const ManageUsersAdminSu = () => {
     return (
         <div className="bg-white/10 col-span-9 rounded-lg p-6">
 
-
             {/* Admin */}
-            <h1 className="font-bold py-4 uppercase">Users/ Members</h1>
-
-            <div className="overflow-x-auto overflow-y-auto max-h-52">
-                <table className="w-full whitespace-nowrap">
-                    <caption className="sr-only">User Information Table</caption>
-                    <thead className="bg-black/60 text-white">
-                        <tr>
-                            <th className="text-left py-3 px-2 rounded-l-lg" scope="col">Name</th>
-                            <th className="text-left py-3 px-2" scope="col">Group</th>
-                            <th className="text-left py-3 px-2" scope="col">Status</th>
-                            <th className="text-right py-3 px-2 rounded-r-lg" scope="col">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {renderTable()}
-                    </tbody>
-                </table>
-            </div>
-            <div className="mt-4">
-                <input className="bg-white/5 rounded-md text-white w-30 mr-2" value={editUser.name} onChange={(e) => handleInputChange(e, 'name')} placeholder="Name" />
-                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.group} onChange={(e) => handleInputChange(e, 'group')} placeholder="Group" />
-                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.status} onChange={(e) => handleInputChange(e, 'status')} placeholder="Status" />
-                <button onClick={addRow} className="px-4 py-1 bg-black text-white rounded-lg">Add User</button>
-            </div>
-
-
-
-            {/* Users/ Members */}
-            <div id="UserandMembers">
+            <div id="Admin">
                 <h1 className="font-bold py-4 uppercase">Admin</h1>
 
 
@@ -253,6 +224,36 @@ const ManageUsersAdminSu = () => {
 
 
             </div>
+
+            {/* Users/ Members */}
+            <h1 className="font-bold py-4 uppercase">Users/ Members</h1>
+
+            <div className="overflow-x-auto overflow-y-auto max-h-52">
+                <table className="w-full whitespace-nowrap">
+                    <caption className="sr-only">User Information Table</caption>
+                    <thead className="bg-black/60 text-white">
+                        <tr>
+                            <th className="text-left py-3 px-2 rounded-l-lg" scope="col">Name</th>
+                            <th className="text-left py-3 px-2" scope="col">Group</th>
+                            <th className="text-left py-3 px-2" scope="col">Status</th>
+                            <th className="text-right py-3 px-2 rounded-r-lg" scope="col">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {renderTable()}
+                    </tbody>
+                </table>
+            </div>
+            <div className="mt-4">
+                <input className="bg-white/5 rounded-md text-white w-30 mr-2" value={editUser.name} onChange={(e) => handleInputChange(e, 'name')} placeholder="Name" />
+                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.group} onChange={(e) => handleInputChange(e, 'group')} placeholder="Group" />
+                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.status} onChange={(e) => handleInputChange(e, 'status')} placeholder="Status" />
+                <button onClick={addRow} className="px-4 py-1 bg-black text-white rounded-lg">Add User</button>
+            </div>
+
+
+
+
 
 
 

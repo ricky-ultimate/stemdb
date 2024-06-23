@@ -65,14 +65,14 @@ const Menu = () => (
         </a>
 
         {/* Group Projects */}
-        <a href="#" className="flex flex-col space-y-2 md:space-y-0 md:flex-row mb-1 items-center md:space-x-2 hover:bg-white/10 group transition duration-150 ease-linear rounded-lg group w-full py-3 px-2">
+        <a href="/UserDashboard/projects" className="flex flex-col space-y-2 md:space-y-0 md:flex-row mb-1 items-center md:space-x-2 hover:bg-white/10 group transition duration-150 ease-linear rounded-lg group w-full py-3 px-2">
             <div className='items-center'>
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="bi bi-briefcase group-hover:text-indigo-400" viewBox="0 0 16 16">
                     <path d="M6.5 1A1.5 1.5 0 0 0 5 2.5V3H1.5A1.5 1.5 0 0 0 0 4.5v8A1.5 1.5 0 0 0 1.5 14h13a1.5 1.5 0 0 0 1.5-1.5v-8A1.5 1.5 0 0 0 14.5 3H11v-.5A1.5 1.5 0 0 0 9.5 1zm0 1h3a.5.5 0 0 1 .5.5V3H6v-.5a.5.5 0 0 1 .5-.5m1.886 6.914L15 7.151V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V7.15l6.614 1.764a1.5 1.5 0 0 0 .772 0M1.5 4h13a.5.5 0 0 1 .5.5v1.616L8.129 7.948a.5.5 0 0 1-.258 0L1 6.116V4.5a.5.5 0 0 1 .5-.5" />
                 </svg>
             </div>
             <div>
-                <p className="font-bold text-base lg:text-lg text-slate-200 leading-4 group-hover:text-indigo-400">Projets</p>
+                <p className="font-bold text-base lg:text-lg text-slate-200 leading-4 group-hover:text-indigo-400">Projects</p>
                 <span className="text-slate-400 text-sm hidden md:block">View STEMs project </span>
             </div>
         </a>
