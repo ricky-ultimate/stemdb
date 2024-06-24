@@ -20,16 +20,20 @@ export async function middleware(req: NextRequest) {
 
   if (pathname === '/superuser') {
     if (token.role !== 'SUPERADMIN') {
+      console.log('SUPERADMIN ROLE REQUIRED!');
       return NextResponse.redirect(new URL('/UserDashboard', req.url));
     }
+    console.log('REWRITING /superuser TO /SUDashboard');
     return NextResponse.rewrite(new URL('/SUDashboard', req.url));
   }
 
   if (pathname === '/admindashboard') {
+    console.log('REWRITING /admindashboard TO /AdminDashboard');
     return NextResponse.rewrite(new URL('/AdminDashboard', req.url));
   }
 
   if (pathname === '/userdashboard') {
+    console.log('REWRITING /userdashboard TO /UserDashboard');
     return NextResponse.rewrite(new URL('/UserDashboard', req.url));
   }
 
@@ -51,5 +55,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/SUDashboard/:path*', '/signin', '/admindashboard', '/userdashboard', '/superuser'],
+    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/SUDashboard/:path*', '/signin', '/admindashboard', '/userdashboard', '/superuser',],
   };
