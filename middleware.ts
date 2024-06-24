@@ -20,8 +20,13 @@ export async function middleware(req: NextRequest) {
 
   if (pathname === '/superuser') {
     if (token.role !== 'SUPERADMIN') {
-      console.log('SUPERADMIN ROLE REQUIRED!');
-      return NextResponse.redirect(new URL('/UserDashboard', req.url));
+      if (token.role === 'ADMIN') {
+        console.log('REDIRECTING ADMIN TO /AdminDashboard');
+        return NextResponse.redirect(new URL('/AdminDashboard', req.url));
+      } else {
+        console.log('REDIRECTING USER TO /UserDashboard');
+        return NextResponse.redirect(new URL('/UserDashboard', req.url));
+      }
     }
     console.log('REWRITING /superuser TO /SUDashboard');
     return NextResponse.rewrite(new URL('/SUDashboard', req.url));
@@ -47,7 +52,13 @@ export async function middleware(req: NextRequest) {
 
   if (pathname.startsWith('/SUDashboard')) {
     if (token.role !== 'SUPERADMIN') {
-      return NextResponse.redirect(new URL('/UserDashboard', req.url));
+      if (token.role === 'ADMIN') {
+        console.log('REDIRECTING ADMIN TO /AdminDashboard');
+        return NextResponse.redirect(new URL('/AdminDashboard', req.url));
+      } else {
+        console.log('REDIRECTING USER TO /UserDashboard');
+        return NextResponse.redirect(new URL('/UserDashboard', req.url));
+      }
     }
   }
 
