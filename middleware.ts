@@ -19,16 +19,26 @@ export async function middleware(req: NextRequest) {
 
 
   if (pathname === '/superuser') {
+    if (token.role !== 'SUPERADMIN') {
+      if (token.role === 'ADMIN') {
+        console.log('REDIRECTING ADMIN TO /AdminDashboard');
+        return NextResponse.redirect(new URL('/AdminDashboard', req.url));
+      } else {
+        console.log('REDIRECTING USER TO /UserDashboard');
+        return NextResponse.redirect(new URL('/UserDashboard', req.url));
+      }
+    }
+    console.log('REWRITING /superuser TO /SUDashboard');
     return NextResponse.rewrite(new URL('/SUDashboard', req.url));
   }
 
-  // Handle lowercase admin dashboard route
-  if (pathname.toLowerCase() === '/admindashboard') {
+  if (pathname === '/admindashboard') {
+    console.log('REWRITING /admindashboard TO /AdminDashboard');
     return NextResponse.rewrite(new URL('/AdminDashboard', req.url));
   }
 
-  // Handle lowercase user dashboard route
-  if (pathname.toLowerCase() === '/userdashboard') {
+  if (pathname === '/userdashboard') {
+    console.log('REWRITING /userdashboard TO /UserDashboard');
     return NextResponse.rewrite(new URL('/UserDashboard', req.url));
   }
 
@@ -42,7 +52,13 @@ export async function middleware(req: NextRequest) {
 
   if (pathname.startsWith('/SUDashboard')) {
     if (token.role !== 'SUPERADMIN') {
-      return NextResponse.redirect(new URL('/UserDashboard', req.url));
+      if (token.role === 'ADMIN') {
+        console.log('REDIRECTING ADMIN TO /AdminDashboard');
+        return NextResponse.redirect(new URL('/AdminDashboard', req.url));
+      } else {
+        console.log('REDIRECTING USER TO /UserDashboard');
+        return NextResponse.redirect(new URL('/UserDashboard', req.url));
+      }
     }
   }
 
@@ -50,5 +66,5 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/SUDashboard/:path*', '/signin', '/admindashboard', '/userdashboard', '/superuser'],
+    matcher: ['/AdminDashboard/:path*', '/UserDashboard/:path*', '/SUDashboard/:path*', '/signin', '/admindashboard', '/userdashboard', '/superuser',],
   };
