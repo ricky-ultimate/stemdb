@@ -12,7 +12,7 @@ async function main() {
       firstName: 'New',
       lastName: 'User',
       matricno: '123456',
-      email: 'new@user.com',
+      email: 'rand@user.com',
       password: hashedPassword, // Store hashed password
       role: 'SUPERADMIN',
     },
