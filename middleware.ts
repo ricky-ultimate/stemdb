@@ -22,13 +22,11 @@ export async function middleware(req: NextRequest) {
     return NextResponse.rewrite(new URL('/SUDashboard', req.url));
   }
 
-  // Handle lowercase admin dashboard route
-  if (pathname.toLowerCase() === '/admindashboard') {
+  if (pathname === '/admindashboard') {
     return NextResponse.rewrite(new URL('/AdminDashboard', req.url));
   }
 
-  // Handle lowercase user dashboard route
-  if (pathname.toLowerCase() === '/userdashboard') {
+  if (pathname === '/userdashboard') {
     return NextResponse.rewrite(new URL('/UserDashboard', req.url));
   }
 
