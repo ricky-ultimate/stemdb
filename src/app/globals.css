@@ -16,15 +16,29 @@
   }
 }
 
-/* body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
-} */
+/* styles/globals.css */
+body {
+  /* width */
+  scrollbar-width: thin;
+  /* color */
+  scrollbar-color: white black;
+}
+
+/* Works on Chrome, Edge, and Safari */
+body::-webkit-scrollbar {
+  width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+  background: black;
+}
+
+body::-webkit-scrollbar-thumb {
+  background-color: white;
+  border-radius: 10px;
+  border: 2px solid black;
+}
+
 
 @layer utilities {
   .text-balance {
