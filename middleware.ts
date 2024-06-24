@@ -19,7 +19,7 @@ export async function middleware(req: NextRequest) {
 
 
   if (pathname === '/superuser') {
-    return NextResponse.rewrite(new URL('/SUdashboard', req.url));
+    return NextResponse.rewrite(new URL('/SUDashboard', req.url));
   }
 
   // Handle lowercase admin dashboard route
