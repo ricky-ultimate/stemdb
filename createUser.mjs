@@ -13,6 +13,7 @@ async function main() {
       lastName: 'dad',
       matricno: '12345678',
       email: 'spacedad@milky.com',
+ 
       password: hashedPassword, // Store hashed password
       role: 'USER',
 >>>>>>> e39386a ("Update createUser function: changed matricno to '1234', email to 'new@.com', and role to 'USER'")
