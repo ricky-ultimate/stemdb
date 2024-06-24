@@ -19,6 +19,9 @@ export async function middleware(req: NextRequest) {
 
 
   if (pathname === '/superuser') {
+    if (token.role !== 'SUPERADMIN') {
+      return NextResponse.redirect(new URL('/UserDashboard', req.url));
+    }
     return NextResponse.rewrite(new URL('/SUDashboard', req.url));
   }
 
