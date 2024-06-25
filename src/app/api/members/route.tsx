@@ -1,5 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma/prisma/prisma";
+import bcrypt from 'bcryptjs';
 
 async function createMember(req: NextApiRequest, res: NextApiResponse) {
     const { firstName, lastName, matricno, email, role } = req.body;
