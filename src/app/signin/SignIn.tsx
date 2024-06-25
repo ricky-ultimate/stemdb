@@ -33,8 +33,10 @@ export default function SignIn() {
       console.log('User Role: ', userRole); //log user role for debugging
 
       // Route the user based on their role
-      if (userRole === 'ADMIN' || userRole === 'SUPERADMIN') {
+      if (userRole === 'ADMIN') {
         router.push('/AdminDashboard/main');
+      } else if (userRole === 'SUPERADMIN'){
+        router.push('/SUDashboard')
       } else {
         router.push('/UserDashboard');
       }
