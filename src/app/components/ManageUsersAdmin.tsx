@@ -7,21 +7,21 @@ const ManageUsersAdmin = () => {
         {
             id: 1,
             name: 'Space Dad',
-            status: 'Admin',
+            matric: 'Group',
         },
     ]);
 
     const [newTaskName, setNewTaskName] = useState('');
     const [editingTask, setEditingTask] = useState<number | null>(null);
     const [editingName, setEditingName] = useState('');
-    const [editingStatus, setEditingStatus] = useState('');
+    const [editingmatric, setEditingmatric] = useState('');
 
     const handleAddTask = () => {
         if (newTaskName.trim() === '') return;
         const newTask = {
             id: tasks.length + 1,
             name: newTaskName,
-            status: 'Edit Group',
+            matric: 'Edit Group',
         };
         setTasks([...tasks, newTask]);
         setNewTaskName('');
@@ -29,19 +29,19 @@ const ManageUsersAdmin = () => {
 
 
 
-    const handleEditTask = (task: { id: number; name: string; status: string }) => {
+    const handleEditTask = (task: { id: number; name: string; matric: string }) => {
         setEditingTask(task.id);
         setEditingName(task.name);
-        setEditingStatus(task.status);
+        setEditingmatric(task.matric);
     };
 
     const handleSaveTask = (id: number) => {
         setTasks(tasks.map(task =>
-            task.id === id ? { ...task, name: editingName, status: editingStatus } : task
+            task.id === id ? { ...task, name: editingName, matric: editingmatric } : task
         ));
         setEditingTask(null);
         setEditingName('');
-        setEditingStatus('');
+        setEditingmatric('');
     };
 
     const handleDeleteTask = (id: number) => {
@@ -51,13 +51,13 @@ const ManageUsersAdmin = () => {
 
 
     const initialUsers = [
-        { id: 1, name: 'Fat Spagetti', group: 'Cyber Sec.', status: 'Prosperting' },
-        { id: 2, name: 'Space Dad', group: 'Charity', status: 'User' },
+        { id: 1, name: 'Fat Spagetti', group: 'Cyber Sec.', department: 'juice', matric: 'Prosperting' },
+        { id: 2, name: 'Space Dad', group: 'Charity', department: 'juice', matric: 'User' },
     ];
 
     const [users, setUsers] = useState(initialUsers);
     const [editingId, setEditingId] = useState(null);
-    const [editUser, setEditUser] = useState({ name: '', group: '', status: '' });
+    const [editUser, setEditUser] = useState({ name: '', group: '', matric: '' , department: ''});
 
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
         const value = e.target.value;
@@ -66,19 +66,19 @@ const ManageUsersAdmin = () => {
 
     const addRow = () => {
         setUsers([...users, { id: users.length + 1, ...editUser }]);
-        setEditUser({ name: '', group: '', status: '' });
+        setEditUser({ name: '', group: '', matric: '', department: '' });
     };
 
-    const editRow = (user: { id: any; name: any; group: any; status: any; }) => {
+    const editRow = (user: { id: any; name: any; group: any; department: any; matric: any; }) => {
         setEditingId(user.id);
-        setEditUser({ name: user.name, group: user.group, status: user.status });
+        setEditUser({ name: user.name, group: user.group, department: user.department, matric: user.matric });
     };
 
     const saveRow = (id: number) => {
         const updatedUsers = users.map(user => (user.id === id ? { ...user, ...editUser } : user));
         setUsers(updatedUsers);
         setEditingId(null);
-        setEditUser({ name: '', group: '', status: '' });
+        setEditUser({ name: '', group: '', matric: '', department: '' });
     };
 
     const deleteRow = (id: number) => {
@@ -93,7 +93,8 @@ const ManageUsersAdmin = () => {
                     <>
                         <td className="py-3 px-2"><input className="bg-white/5 rounded-md text-white w-30" value={editUser.name} onChange={(e) => handleInputChange(e, 'name')} /></td>
                         <td className="py-3 px-2"><input className="bg-white/5 rounded-md text-white w-20" value={editUser.group} onChange={(e) => handleInputChange(e, 'group')} /></td>
-                        <td className="py-3 px-2"><input className="bg-white/5 rounded-md text-white w-20" value={editUser.status} onChange={(e) => handleInputChange(e, 'status')} /></td>
+                        <td className="py-3 px-2"><input className="bg-white/5 rounded-md text-white w-20" value={editUser.matric} onChange={(e) => handleInputChange(e, 'matric')} /></td>
+                        <td className="py-3 px-2"><input className="bg-white/5 rounded-md text-white w-20" value={editUser.department} onChange={(e) => handleInputChange(e, 'department')} /></td>
                         <td className="py-3 px-2 text-right">
                             <button onClick={() => saveRow(user.id)} className="px-2 py-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="hover:text-green-500 w-5 h-5 bi bi-floppy" viewBox="0 0 16 16">
@@ -107,7 +108,8 @@ const ManageUsersAdmin = () => {
                     <>
                         <td className="py-3 px-2">{user.name}</td>
                         <td className="py-3 px-2">{user.group}</td>
-                        <td className="py-3 px-2">{user.status}</td>
+                        <td className="py-3 px-2">{user.matric}</td>
+                        <td className="py-3 px-2">{user.department}</td>
                         <td className="py-3 px-2 text-right">
                             <button onClick={() => editRow(user)} className="px-2 py-1">
                                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 hover:text-yellow-500">
@@ -141,7 +143,8 @@ const ManageUsersAdmin = () => {
                         <tr>
                             <th className="text-left py-3 px-2 rounded-l-lg" scope="col">Name</th>
                             <th className="text-left py-3 px-2" scope="col">Group</th>
-                            <th className="text-left py-3 px-2" scope="col">Status</th>
+                            <th className="text-left py-3 px-2" scope="col">Matric No.</th>
+                            <th className="text-left py-3 px-2" scope="col">Department</th>
                             <th className="text-right py-3 px-2 rounded-r-lg" scope="col">Actions</th>
                         </tr>
                     </thead>
@@ -153,7 +156,8 @@ const ManageUsersAdmin = () => {
             <div className="mt-4">
                 <input className="bg-white/5 rounded-md text-white w-30 mr-2" value={editUser.name} onChange={(e) => handleInputChange(e, 'name')} placeholder="Name" />
                 <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.group} onChange={(e) => handleInputChange(e, 'group')} placeholder="Group" />
-                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.status} onChange={(e) => handleInputChange(e, 'status')} placeholder="Status" />
+                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.matric} onChange={(e) => handleInputChange(e, 'matric')} placeholder="matric" />
+                <input className="bg-white/5 rounded-md text-white  w-20 mr-2" value={editUser.department} onChange={(e) => handleInputChange(e, 'delartment')} placeholder="department" />
                 <button onClick={addRow} className="px-4 py-1 bg-black text-white rounded-lg">Add User</button>
             </div>
 
@@ -199,13 +203,13 @@ const ManageUsersAdmin = () => {
                                         {editingTask === task.id ? (
                                             <input
                                                 type="text"
-                                                value={editingStatus}
-                                                onChange={(e) => setEditingStatus(e.target.value)}
+                                                value={editingmatric}
+                                                onChange={(e) => setEditingmatric(e.target.value)}
                                                 className="w-full px-2 text-right"
                                             />
                                         ) : (
-                                            <span className={(task.status)}>
-                                                {task.status}
+                                            <span className={(task.matric)}>
+                                                {task.matric}
                                             </span>
                                         )}
                                     </td>
