@@ -35,20 +35,24 @@ async function createMember(req: NextApiRequest, res: NextApiResponse) {
   }
 
   async function updateMember(req: NextApiRequest, res: NextApiResponse) {
-    const { id, firstName, lastName, matricno, email, role } = req.body;
+    const { id, firstName, lastName, matricno, email, role, password } = req.body;
     if (!id || !firstName || !lastName || !matricno || !email || !role) {
       return res.status(400).json({ error: 'All fields are required' });
     }
     try {
+      const data: any = {
+        firstName,
+        lastName,
+        matricno,
+        email,
+        role,
+      };
+      if (password) {
+        data.password = await bcrypt.hash(password, 10);
+      }
       const member = await prisma.member.update({
         where: { id: parseInt(id) },
-        data: {
-          firstName,
-          lastName,
-          matricno,
-          email,
-          role,
-        },
+        data,
       });
       res.status(200).json(member);
     } catch (error) {
