@@ -5,7 +5,7 @@ const AdminStatistics = () => (
         <div id="Stats">
             <h1 className="font-bold py-4 uppercase">Stats</h1>
             <div id="stats" className="grid gird-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                <div className="     to-white/5 p-6 rounded-lg">
+                <div className="  bg-black/60   to-white/5 p-6 rounded-lg">
 
 
                     <div className="flex flex-row space-x-4 items-center">
