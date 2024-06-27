@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma/prisma/prisma";
 
-async function createProject(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
   const { title, description, startDate, endDate, members } = req.body;
   if (!title || !description || !startDate || !members) {
     return res.status(400).json({ error: 'Title, description, startDate, and members are required' });
@@ -29,7 +29,7 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-  async function getProjects(req: NextApiRequest, res: NextApiResponse) {
+  export async function GET(req: NextApiRequest, res: NextApiResponse) {
     try {
       const projects = await prisma.project.findMany();
       res.status(200).json(projects);
@@ -39,7 +39,7 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
   }
 
 
-  async function updateProject(req: NextApiRequest, res: NextApiResponse) {
+  export async function PUT(req: NextApiRequest, res: NextApiResponse) {
     const { id, title, description, startDate, endDate, members } = req.body;
     if (!id || !title || !description || !startDate || !members) {
       return res.status(400).json({ error: 'ID, title, description, startDate, and members are required' });
@@ -68,7 +68,7 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
   }
 
 
-  async function deleteProject(req: NextApiRequest, res: NextApiResponse) {
+  export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
     const { id } = req.body;
     if (!id) {
       return res.status(400).json({ error: 'ID is required' });
@@ -80,27 +80,5 @@ async function createProject(req: NextApiRequest, res: NextApiResponse) {
       res.status(204).end();
     } catch (error) {
       res.status(500).json({ error: 'Failed to delete project' });
-    }
-  }
-
-
-  export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    switch (req.method) {
-      case 'GET':
-        await getProjects(req, res);
-        break;
-      case 'POST':
-        await createProject(req, res);
-        break;
-      case 'PUT':
-      case 'PATCH':
-        await updateProject(req, res);
-        break;
-      case 'DELETE':
-        await deleteProject(req, res);
-        break;
-      default:
-        res.setHeader('Allow', ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
     }
   }
