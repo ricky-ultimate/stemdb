@@ -1,7 +1,7 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import prisma from "../../../../prisma/prisma/prisma";
 
-async function createEvent(req: NextApiRequest, res: NextApiResponse) {
+export async function POST(req: NextApiRequest, res: NextApiResponse) {
   const { name, date, location, description } = req.body;
   if (!name || !date || !location || !description) {
     return res.status(400).json({ error: 'All fields are required' });
@@ -22,7 +22,7 @@ async function createEvent(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-async function getEvents(req: NextApiRequest, res: NextApiResponse) {
+export async function GET(req: NextApiRequest, res: NextApiResponse) {
   try {
     const events = await prisma.event.findMany();
     res.status(200).json(events);
@@ -32,7 +32,7 @@ async function getEvents(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-async function updateEvent(req: NextApiRequest, res: NextApiResponse) {
+export async function PUT(req: NextApiRequest, res: NextApiResponse) {
   const { id, name, date, location, description } = req.body;
   if (!id || !name || !date || !location || !description) {
     return res.status(400).json({ error: 'All fields are required' });
@@ -54,7 +54,7 @@ async function updateEvent(req: NextApiRequest, res: NextApiResponse) {
 }
 
 
-async function deleteEvent(req: NextApiRequest, res: NextApiResponse) {
+export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
   const { id } = req.body;
   if (!id) {
     return res.status(400).json({ error: 'ID is required' });
@@ -68,25 +68,3 @@ async function deleteEvent(req: NextApiRequest, res: NextApiResponse) {
     res.status(500).json({ error: 'Failed to delete event' });
   }
 }
-
-
-  export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-    switch (req.method) {
-      case 'GET':
-        await getEvents(req, res);
-        break;
-      case 'POST':
-        await createEvent(req, res);
-        break;
-      case 'PUT':
-      case 'PATCH':
-        await updateEvent(req, res);
-        break;
-      case 'DELETE':
-        await deleteEvent(req, res);
-        break;
-      default:
-        res.setHeader('Allow', ['GET', 'POST', 'PUT', 'PATCH', 'DELETE']);
-        res.status(405).end(`Method ${req.method} Not Allowed`);
-    }
-  }
