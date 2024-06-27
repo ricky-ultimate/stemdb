@@ -1,10 +1,10 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import prisma from "../../../../prisma/prisma/prisma";
+import { NextResponse } from 'next/server';
+import prisma from '../../../../prisma/prisma/prisma';
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { name, date, location, description } = req.body;
+export async function POST(req: Request) {
+  const { name, date, location, description } = await req.json();
   if (!name || !date || !location || !description) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
   }
   try {
     const event = await prisma.event.create({
@@ -15,27 +15,25 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
         description,
       },
     });
-    res.status(201).json(event);
+    return NextResponse.json(event, { status: 201 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create event' });
+    return NextResponse.json({ error: 'Failed to create event' }, { status: 500 });
   }
 }
 
-
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     const events = await prisma.event.findMany();
-    res.status(200).json(events);
+    return NextResponse.json(events, { status: 200 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch events' });
+    return NextResponse.json({ error: 'Failed to fetch events' }, { status: 500 });
   }
 }
 
-
-export async function PUT(req: NextApiRequest, res: NextApiResponse) {
-  const { id, name, date, location, description } = req.body;
+export async function PUT(req: Request) {
+  const { id, name, date, location, description } = await req.json();
   if (!id || !name || !date || !location || !description) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
   }
   try {
     const event = await prisma.event.update({
@@ -47,24 +45,23 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse) {
         description,
       },
     });
-    res.status(200).json(event);
+    return NextResponse.json(event, { status: 200 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update event' });
+    return NextResponse.json({ error: 'Failed to update event' }, { status: 500 });
   }
 }
 
-
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.body;
+export async function DELETE(req: Request) {
+  const { id } = await req.json();
   if (!id) {
-    return res.status(400).json({ error: 'ID is required' });
+    return NextResponse.json({ error: 'ID is required' }, { status: 400 });
   }
   try {
     await prisma.event.delete({
       where: { id: parseInt(id) },
     });
-    res.status(204).end();
+    return NextResponse.json({}, { status: 204 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete event' });
+    return NextResponse.json({ error: 'Failed to delete event' }, { status: 500 });
   }
 }

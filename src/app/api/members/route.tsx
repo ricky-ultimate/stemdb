@@ -1,11 +1,11 @@
-import { NextApiRequest, NextApiResponse } from "next";
+import { NextResponse } from 'next/server';
 import prisma from "../../../../prisma/prisma/prisma";
 import bcrypt from 'bcryptjs';
 
-export async function POST(req: NextApiRequest, res: NextApiResponse) {
-  const { firstName, lastName, matricno, email, role, password } = req.body;
+export async function POST(req: Request) {
+  const { firstName, lastName, matricno, email, role, password } = await req.json();
   if (!firstName || !lastName || !matricno || !email || !role || !password) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
   }
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
@@ -19,25 +19,25 @@ export async function POST(req: NextApiRequest, res: NextApiResponse) {
         password: hashedPassword,
       },
     });
-    res.status(201).json(member);
+    return NextResponse.json(member, { status: 201 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to create member' });
+    return NextResponse.json({ error: 'Failed to create member' }, { status: 500 });
   }
 }
 
-export async function GET(req: NextApiRequest, res: NextApiResponse) {
+export async function GET() {
   try {
     const members = await prisma.member.findMany();
-    res.status(200).json(members);
+    return NextResponse.json(members, { status: 200 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to fetch members' });
+    return NextResponse.json({ error: 'Failed to fetch members' }, { status: 500 });
   }
 }
 
-export async function PUT(req: NextApiRequest, res: NextApiResponse) {
-  const { id, firstName, lastName, matricno, email, role, password } = req.body;
+export async function PUT(req: Request) {
+  const { id, firstName, lastName, matricno, email, role, password } = await req.json();
   if (!id || !firstName || !lastName || !matricno || !email || !role) {
-    return res.status(400).json({ error: 'All fields are required' });
+    return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
   }
   try {
     const data: any = {
@@ -54,23 +54,23 @@ export async function PUT(req: NextApiRequest, res: NextApiResponse) {
       where: { id: parseInt(id) },
       data,
     });
-    res.status(200).json(member);
+    return NextResponse.json(member, { status: 200 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to update member' });
+    return NextResponse.json({ error: 'Failed to update member' }, { status: 500 });
   }
 }
 
-export async function DELETE(req: NextApiRequest, res: NextApiResponse) {
-  const { id } = req.body;
+export async function DELETE(req: Request) {
+  const { id } = await req.json();
   if (!id) {
-    return res.status(400).json({ error: 'ID is required' });
+    return NextResponse.json({ error: 'ID is required' }, { status: 400 });
   }
   try {
     await prisma.member.delete({
       where: { id: parseInt(id) },
     });
-    res.status(204).end();
+    return NextResponse.json({}, { status: 204 });
   } catch (error) {
-    res.status(500).json({ error: 'Failed to delete member' });
+    return NextResponse.json({ error: 'Failed to delete member' }, { status: 500 });
   }
 }
