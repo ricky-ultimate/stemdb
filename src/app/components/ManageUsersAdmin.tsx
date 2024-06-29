@@ -11,6 +11,12 @@ interface User {
     email: string;
     role: string;
   }
+
+  interface Group {
+    id: number;
+    name: string;
+    leadId: number;
+  }
   
 const ManageUsersAdmin = () => {
     const [tasks, setTasks] = useState([
