@@ -19,6 +19,23 @@ interface User {
   }
 
 const ManageUsersAdmin = () => {
+
+    const [users, setUsers] = useState<User[]>([]);
+    const [editUser, setEditUser] = useState<Partial<User>>({});
+
+    useEffect(() => {
+        fetchUsers();
+      }, []);
+
+      const fetchUsers = async () => {
+        try {
+          const response = await axios.get('/api/members');
+          setUsers(response.data);
+        } catch (error) {
+          console.error('Failed to fetch users:', error);
+        }
+      };
+    
     
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
         const value = e.target.value;
