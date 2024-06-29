@@ -1,7 +1,7 @@
 "use client";
 
-import { ChangeEvent, SetStateAction, useState } from 'react';
-
+import { ChangeEvent, useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface User {
     id: number;
