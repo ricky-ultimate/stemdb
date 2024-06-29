@@ -17,64 +17,9 @@ interface User {
     name: string;
     leadId: number;
   }
-  
+
 const ManageUsersAdmin = () => {
-    const [tasks, setTasks] = useState([
-        {
-            id: 1,
-            name: 'Space Dad',
-            matric: 'Group',
-        },
-    ]);
-
-    const [newTaskName, setNewTaskName] = useState('');
-    const [editingTask, setEditingTask] = useState<number | null>(null);
-    const [editingName, setEditingName] = useState('');
-    const [editingmatric, setEditingmatric] = useState('');
-
-    const handleAddTask = () => {
-        if (newTaskName.trim() === '') return;
-        const newTask = {
-            id: tasks.length + 1,
-            name: newTaskName,
-            matric: 'Edit Group',
-        };
-        setTasks([...tasks, newTask]);
-        setNewTaskName('');
-    };
-
-
-
-    const handleEditTask = (task: { id: number; name: string; matric: string }) => {
-        setEditingTask(task.id);
-        setEditingName(task.name);
-        setEditingmatric(task.matric);
-    };
-
-    const handleSaveTask = (id: number) => {
-        setTasks(tasks.map(task =>
-            task.id === id ? { ...task, name: editingName, matric: editingmatric } : task
-        ));
-        setEditingTask(null);
-        setEditingName('');
-        setEditingmatric('');
-    };
-
-    const handleDeleteTask = (id: number) => {
-        setTasks(tasks.filter(task => task.id !== id));
-    };
-
-
-
-    const initialUsers = [
-        { id: 1, name: 'Fat Spagetti', group: 'Cyber Sec.', department: 'juice', matric: 'Prosperting' },
-        { id: 2, name: 'Space Dad', group: 'Charity', department: 'juice', matric: 'User' },
-    ];
-
-    const [users, setUsers] = useState(initialUsers);
-    const [editingId, setEditingId] = useState(null);
-    const [editUser, setEditUser] = useState({ name: '', group: '', matric: '' , department: ''});
-
+    
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
         const value = e.target.value;
         setEditUser(prevState => ({ ...prevState, [field]: value }));
