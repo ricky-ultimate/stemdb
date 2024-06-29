@@ -52,10 +52,9 @@ const ManageUsersAdmin = () => {
         }
       };
 
-    const editRow = (user: { id: any; name: any; group: any; department: any; matric: any; }) => {
-        setEditingId(user.id);
-        setEditUser({ name: user.name, group: user.group, department: user.department, matric: user.matric });
-    };
+      const editRow = (user: User) => {
+        setEditUser(user);
+      };
 
     const saveRow = (id: number) => {
         const updatedUsers = users.map(user => (user.id === id ? { ...user, ...editUser } : user));
