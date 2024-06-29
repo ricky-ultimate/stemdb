@@ -42,10 +42,15 @@ const ManageUsersAdmin = () => {
         setEditUser(prevState => ({ ...prevState, [field]: value }));
     };
 
-    const addRow = () => {
-        setUsers([...users, { id: users.length + 1, ...editUser }]);
-        setEditUser({ name: '', group: '', matric: '', department: '' });
-    };
+    const addRow = async () => {
+        try {
+          const response = await axios.post('/api/members', editUser);
+          setUsers([...users, response.data]);
+          setEditUser({});
+        } catch (error) {
+          console.error('Failed to add user:', error);
+        }
+      };
 
     const editRow = (user: { id: any; name: any; group: any; department: any; matric: any; }) => {
         setEditingId(user.id);
