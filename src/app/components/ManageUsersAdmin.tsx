@@ -2,6 +2,16 @@
 
 import { ChangeEvent, SetStateAction, useState } from 'react';
 
+
+interface User {
+    id: number;
+    firstName: string;
+    lastName: string;
+    matricno: string;
+    email: string;
+    role: string;
+  }
+  
 const ManageUsersAdmin = () => {
     const [tasks, setTasks] = useState([
         {
