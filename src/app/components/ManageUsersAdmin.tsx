@@ -24,7 +24,7 @@ const ManageUsersAdmin = () => {
   const [editUser, setEditUser] = useState<Partial<User>>({});
   const [editGroup, setEditGroup] = useState<Partial<Group>>({});
   const [newGroupName, setNewGroupName] = useState('');
-  const [newGroupLeadId, setNewGroupLeadId] = useState<number | null>(null);
+  const [newGroupLeadId, setNewGroupLeadId] = useState<number | undefined>();
 
   useEffect(() => {
     fetchUsers();
@@ -93,15 +93,14 @@ const ManageUsersAdmin = () => {
   };
 
   const addGroup = async () => {
-    if (newGroupName && newGroupLeadId !== null) {
-      try {
-        const response = await axios.post('/api/groups', { name: newGroupName, leadId: newGroupLeadId });
-        setGroups([...groups, response.data]);
-        setNewGroupName('');
-        setNewGroupLeadId(null);
-      } catch (error) {
-        console.error('Failed to add group:', error);
-      }
+    if (!newGroupName || newGroupLeadId === undefined) return;
+    try {
+      const response = await axios.post('/api/groups', { name: newGroupName, leadId: newGroupLeadId });
+      setGroups([...groups, response.data]);
+      setNewGroupName('');
+      setNewGroupLeadId(undefined);
+    } catch (error) {
+      console.error('Failed to add group:', error);
     }
   };
 
@@ -111,7 +110,7 @@ const ManageUsersAdmin = () => {
 
   const saveGroupRow = async (id: number) => {
     try {
-      const response = await axios.put(`/api/groups/${id}`, editGroup);
+      const response = await axios.put('/api/groups', { id, ...editGroup });
       setGroups(groups.map(group => (group.id === id ? response.data : group)));
       setEditGroup({});
     } catch (error) {
@@ -121,7 +120,7 @@ const ManageUsersAdmin = () => {
 
   const deleteGroupRow = async (id: number) => {
     try {
-      await axios.delete(`/api/groups/${id}`);
+      await axios.delete('/api/groups', { data: { id } });
       setGroups(groups.filter(group => group.id !== id));
     } catch (error) {
       console.error('Failed to delete group:', error);
@@ -133,6 +132,7 @@ const ManageUsersAdmin = () => {
       <tr key={user.id}>
         {editUser.id === user.id ? (
           <>
+            <td className="py-3 px-2">{user.id}</td>
             <td className="py-3 px-2">
               <input
                 className="bg-white/5 rounded-md text-white w-30"
@@ -176,13 +176,14 @@ const ManageUsersAdmin = () => {
               <button onClick={() => saveRow(user.id)} className="px-2 py-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="hover:text-green-500 w-5 h-5 bi bi-floppy" viewBox="0 0 16 16">
                   <path d="M11 2H9v3h2z" />
-                  <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z" />
+                  <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a.5.5 0 0 1 .5.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z" />
                 </svg>
               </button>
             </td>
           </>
         ) : (
           <>
+            <td className="py-3 px-2">{user.id}</td>
             <td className="py-3 px-2">{user.firstName}</td>
             <td className="py-3 px-2">{user.lastName}</td>
             <td className="py-3 px-2">{user.matricno}</td>
@@ -212,6 +213,7 @@ const ManageUsersAdmin = () => {
       <tr key={group.id}>
         {editGroup.id === group.id ? (
           <>
+            <td className="py-3 px-2">{group.id}</td>
             <td className="py-3 px-2">
               <input
                 className="bg-white/5 rounded-md text-white w-30"
@@ -225,6 +227,7 @@ const ManageUsersAdmin = () => {
                 value={editGroup.leadId || ''}
                 onChange={(e) => handleGroupChange(e, 'leadId')}
               >
+                <option value="" disabled>Select Group Lead</option>
                 {users.map(user => (
                   <option key={user.id} value={user.id}>
                     {user.firstName} {user.lastName}
@@ -243,10 +246,9 @@ const ManageUsersAdmin = () => {
           </>
         ) : (
           <>
+            <td className="py-3 px-2">{group.id}</td>
             <td className="py-3 px-2">{group.name}</td>
-            <td className="py-3 px-2">
-              {users.find(user => user.id === group.leadId)?.firstName} {users.find(user => user.id === group.leadId)?.lastName}
-            </td>
+            <td className="py-3 px-2">{users.find(user => user.id === group.leadId)?.firstName} {users.find(user => user.id === group.leadId)?.lastName}</td>
             <td className="py-3 px-2 text-right">
               <button onClick={() => editGroupRow(group)} className="px-2 py-1">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth="1.5" stroke="currentColor" className="w-5 h-5 hover:text-yellow-500">
@@ -274,7 +276,8 @@ const ManageUsersAdmin = () => {
           <caption className="sr-only">User Information Table</caption>
           <thead className="bg-black/60 text-white">
             <tr>
-              <th className="text-left py-3 px-2 rounded-l-lg" scope="col">First Name</th>
+              <th className="text-left py-3 px-2 rounded-l-lg" scope="col">ID</th>
+              <th className="text-left py-3 px-2" scope="col">First Name</th>
               <th className="text-left py-3 px-2" scope="col">Last Name</th>
               <th className="text-left py-3 px-2" scope="col">Matric No.</th>
               <th className="text-left py-3 px-2" scope="col">Email</th>
@@ -306,7 +309,8 @@ const ManageUsersAdmin = () => {
           <caption className="sr-only">Group Information Table</caption>
           <thead className="bg-black/60 text-white">
             <tr>
-              <th className="text-left py-3 px-2 rounded-l-lg" scope="col">Group Name</th>
+              <th className="text-left py-3 px-2 rounded-l-lg" scope="col">ID</th>
+              <th className="text-left py-3 px-2" scope="col">Name</th>
               <th className="text-left py-3 px-2" scope="col">Group Lead</th>
               <th className="text-right py-3 px-2 rounded-r-lg" scope="col">Actions</th>
             </tr>
@@ -318,7 +322,7 @@ const ManageUsersAdmin = () => {
       </div>
       <div className="mt-4">
         <input className="bg-white/5 rounded-md text-white w-30 mr-2" value={newGroupName} onChange={(e) => setNewGroupName(e.target.value)} placeholder="Group Name" />
-        <select className="bg-white/5 rounded-md text-white w-20 mr-2" value={newGroupLeadId || ''} onChange={(e) => setNewGroupLeadId(parseInt(e.target.value))}>
+        <select className="bg-white/5 rounded-md text-white w-20 mr-2" value={newGroupLeadId} onChange={(e) => setNewGroupLeadId(Number(e.target.value))}>
           <option value="" disabled>Select Group Lead</option>
           {users.map(user => (
             <option key={user.id} value={user.id}>
