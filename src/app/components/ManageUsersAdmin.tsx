@@ -299,6 +299,34 @@ const ManageUsersAdmin = () => {
         <button onClick={addRow} className="px-4 py-1 bg-black text-white rounded-lg">Add User</button>
       </div>
 
+      <h1 className="font-bold py-4 uppercase">Groups</h1>
+      <div className="overflow-x-auto overflow-y-auto max-h-52">
+        <table className="w-full whitespace-nowrap">
+          <caption className="sr-only">Group Information Table</caption>
+          <thead className="bg-black/60 text-white">
+            <tr>
+              <th className="text-left py-3 px-2 rounded-l-lg" scope="col">Group Name</th>
+              <th className="text-left py-3 px-2" scope="col">Group Lead</th>
+              <th className="text-right py-3 px-2 rounded-r-lg" scope="col">Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            {renderGroupTable()}
+          </tbody>
+        </table>
+      </div>
+      <div className="mt-4">
+        <input className="bg-white/5 rounded-md text-white w-30 mr-2" value={newGroupName} onChange={(e) => setNewGroupName(e.target.value)} placeholder="Group Name" />
+        <select className="bg-white/5 rounded-md text-white w-20 mr-2" value={newGroupLeadId || ''} onChange={(e) => setNewGroupLeadId(parseInt(e.target.value))}>
+          <option value="" disabled>Select Group Lead</option>
+          {users.map(user => (
+            <option key={user.id} value={user.id}>
+              {user.firstName} {user.lastName}
+            </option>
+          ))}
+        </select>
+        <button onClick={addGroup} className="px-4 py-1 bg-black text-white rounded-lg">Add Group</button>
+      </div>
     </div>
   );
 };
