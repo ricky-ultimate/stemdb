@@ -56,12 +56,15 @@ const ManageUsersAdmin = () => {
         setEditUser(user);
       };
 
-    const saveRow = (id: number) => {
-        const updatedUsers = users.map(user => (user.id === id ? { ...user, ...editUser } : user));
-        setUsers(updatedUsers);
-        setEditingId(null);
-        setEditUser({ name: '', group: '', matric: '', department: '' });
-    };
+      const saveRow = async (id: number) => {
+        try {
+          const response = await axios.put('/api/members', { id, ...editUser });
+          setUsers(users.map(user => (user.id === id ? response.data : user)));
+          setEditUser({});
+        } catch (error) {
+          console.error('Failed to update user:', error);
+        }
+      };
 
     const deleteRow = (id: number) => {
         const updatedUsers = users.filter(user => user.id !== id);
