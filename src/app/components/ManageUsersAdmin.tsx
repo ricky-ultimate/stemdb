@@ -1,7 +1,7 @@
 "use client";
 
-import { ChangeEvent, useState, useEffect } from "react";
-import axios from "axios";
+import { ChangeEvent, useState, useEffect } from 'react';
+import axios from 'axios';
 
 interface User {
   id: number;
@@ -19,12 +19,12 @@ interface Group {
 }
 
 const ManageUsersAdmin = () => {
-    const [users, setUsers] = useState<User[]>([]);
-    const [groups, setGroups] = useState<Group[]>([]);
-    const [editUser, setEditUser] = useState<Partial<User>>({});
-    const [editGroup, setEditGroup] = useState<Partial<Group>>({});
-    const [newGroupName, setNewGroupName] = useState('');
-    const [newGroupLeadId, setNewGroupLeadId] = useState<number | null>(null);
+  const [users, setUsers] = useState<User[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
+  const [editUser, setEditUser] = useState<Partial<User>>({});
+  const [editGroup, setEditGroup] = useState<Partial<Group>>({});
+  const [newGroupName, setNewGroupName] = useState('');
+  const [newGroupLeadId, setNewGroupLeadId] = useState<number | null>(null);
 
   useEffect(() => {
     fetchUsers();
@@ -33,10 +33,10 @@ const ManageUsersAdmin = () => {
 
   const fetchUsers = async () => {
     try {
-      const response = await axios.get("/api/members");
+      const response = await axios.get('/api/members');
       setUsers(response.data);
     } catch (error) {
-      console.error("Failed to fetch users:", error);
+      console.error('Failed to fetch users:', error);
     }
   };
 
@@ -49,21 +49,23 @@ const ManageUsersAdmin = () => {
     }
   };
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement>,
-    field: string
-  ) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
     const value = e.target.value;
-    setEditUser((prevState) => ({ ...prevState, [field]: value }));
+    setEditUser(prevState => ({ ...prevState, [field]: value }));
+  };
+
+  const handleGroupChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
+    const value = e.target.value;
+    setEditGroup(prevState => ({ ...prevState, [field]: value }));
   };
 
   const addRow = async () => {
     try {
-      const response = await axios.post("/api/members", editUser);
+      const response = await axios.post('/api/members', editUser);
       setUsers([...users, response.data]);
       setEditUser({});
     } catch (error) {
-      console.error("Failed to add user:", error);
+      console.error('Failed to add user:', error);
     }
   };
 
@@ -73,20 +75,20 @@ const ManageUsersAdmin = () => {
 
   const saveRow = async (id: number) => {
     try {
-      const response = await axios.put("/api/members", { id, ...editUser });
-      setUsers(users.map((user) => (user.id === id ? response.data : user)));
+      const response = await axios.put('/api/members', { id, ...editUser });
+      setUsers(users.map(user => (user.id === id ? response.data : user)));
       setEditUser({});
     } catch (error) {
-      console.error("Failed to update user:", error);
+      console.error('Failed to update user:', error);
     }
   };
 
   const deleteRow = async (id: number) => {
     try {
-      await axios.delete("/api/members", { data: { id } });
-      setUsers(users.filter((user) => user.id !== id));
+      await axios.delete('/api/members', { data: { id } });
+      setUsers(users.filter(user => user.id !== id));
     } catch (error) {
-      console.error("Failed to delete user:", error);
+      console.error('Failed to delete user:', error);
     }
   };
 
@@ -272,8 +274,7 @@ const ManageUsersAdmin = () => {
           <caption className="sr-only">User Information Table</caption>
           <thead className="bg-black/60 text-white">
             <tr>
-              <th className="text-left py-3 px-2 rounded-l-lg" scope="col">ID</th>
-              <th className="text-left py-3 px-2" scope="col">First Name</th>
+              <th className="text-left py-3 px-2 rounded-l-lg" scope="col">First Name</th>
               <th className="text-left py-3 px-2" scope="col">Last Name</th>
               <th className="text-left py-3 px-2" scope="col">Matric No.</th>
               <th className="text-left py-3 px-2" scope="col">Email</th>
