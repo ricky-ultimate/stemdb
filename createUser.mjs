@@ -9,10 +9,10 @@ async function main() {
 
   const user = await prisma.member.create({
     data: {
-      firstName: 'space',
-      lastName: 'dad',
-      matricno: '12345678',
-      email: 'spacedad@milky.com',
+      firstName: 'sage',
+      lastName: 'cele',
+      matricno: '111222',
+      email: 'cele@cele.com',
       password: hashedPassword, // Store hashed password
       role: 'USER',
     },
