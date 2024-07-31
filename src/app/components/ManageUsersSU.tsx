@@ -55,6 +55,11 @@ const ManageUsersAdminSu = () => {
     setEditUser(prevState => ({ ...prevState, [field]: value }));
   };
   
+  const handleGroupChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
+    const value = e.target.value;
+    setEditGroup(prevState => ({ ...prevState, [field]: value }));
+  };
+
   const addRow = async () => {
     try {
       const response = await axios.post('/api/members', editUser);
@@ -87,6 +92,41 @@ const ManageUsersAdminSu = () => {
       setUsers(users.filter(user => user.id !== id));
     } catch (error) {
       console.error('Failed to delete user:', error);
+    }
+  };
+
+  const addGroup = async () => {
+    if (!newGroupName || newGroupLeadId === undefined) return;
+    try {
+      const response = await axios.post('/api/groups', { name: newGroupName, leadId: newGroupLeadId });
+      setGroups([...groups, response.data]);
+      setNewGroupName('');
+      setNewGroupLeadId(undefined);
+    } catch (error) {
+      console.error('Failed to add group:', error);
+    }
+  };
+  
+  const editGroupRow = (group: Group) => {
+    setEditGroup(group);
+  };
+  
+  const saveGroupRow = async (id: number) => {
+    try {
+      const response = await axios.put('/api/groups', { id, ...editGroup });
+      setGroups(groups.map(group => (group.id === id ? response.data : group)));
+      setEditGroup({});
+    } catch (error) {
+      console.error('Failed to update group:', error);
+    }
+  };
+  
+  const deleteGroupRow = async (id: number) => {
+    try {
+      await axios.delete('/api/groups', { data: { id } });
+      setGroups(groups.filter(group => group.id !== id));
+    } catch (error) {
+      console.error('Failed to delete group:', error);
     }
   };
   
