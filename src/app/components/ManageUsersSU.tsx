@@ -32,45 +32,22 @@ const ManageUsersAdminSu = () => {
 
 
 
-    const handleEditTask = (task: { id: number; name: string; status: string }) => {
-        setEditingTask(task.id);
-        setEditingName(task.name);
-        setEditingStatus(task.status);
-    };
-
-    const handleSaveTask = (id: number) => {
-        setTasks(tasks.map(task =>
-            task.id === id ? { ...task, name: editingName, status: editingStatus } : task
-        ));
-        setEditingTask(null);
-        setEditingName('');
-        setEditingStatus('');
-    };
-
-    const handleDeleteTask = (id: number) => {
-        setTasks(tasks.filter(task => task.id !== id));
-    };
-
-
-
-    const initialUsers = [
-        { id: 1, name: 'Fat Spagetti', group: 'Cyber Sec.', status: 'Prosperting' },
-        { id: 2, name: 'Space Dad', group: 'Charity', status: 'User' },
-    ];
-
-    const [users, setUsers] = useState(initialUsers);
-    const [editingId, setEditingId] = useState(null);
-    const [editUser, setEditUser] = useState({ name: '', group: '', status: '' });
-
-    const handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: string) => {
-        const value = e.target.value;
-        setEditUser(prevState => ({ ...prevState, [field]: value }));
-    };
-
-    const addRow = () => {
-        setUsers([...users, { id: users.length + 1, ...editUser }]);
-        setEditUser({ name: '', group: '', status: '' });
-    };
+    
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
+    const value = e.target.value;
+    setEditUser(prevState => ({ ...prevState, [field]: value }));
+  };
+  
+  const addRow = async () => {
+    try {
+      const response = await axios.post('/api/members', editUser);
+      setUsers([...users, response.data]);
+      setEditUser({});
+    } catch (error) {
+      console.error('Failed to add user:', error);
+    }
+  };
+  
 
     const editRow = (user: { id: any; name: any; group: any; status: any; }) => {
         setEditingId(user.id);
