@@ -12,13 +12,23 @@ interface User {
   role: string;
 }
 
+interface Group {
+    id: number;
+    name: string;
+    leadId: number;
+  }
 
 const ManageUsersAdminSu = () => {
   const [users, setUsers] = useState<User[]>([]);
+  const [groups, setGroups] = useState<Group[]>([]);
   const [editUser, setEditUser] = useState<Partial<User>>({});
+  const [editGroup, setEditGroup] = useState<Partial<Group>>({});
+  const [newGroupName, setNewGroupName] = useState('');
+  const [newGroupLeadId, setNewGroupLeadId] = useState<number | undefined>();
 
   useEffect(() => {
     fetchUsers();
+    fetchGroups();
   }, []);
 
   const fetchUsers = async () => {
@@ -30,7 +40,14 @@ const ManageUsersAdminSu = () => {
     }
   };
 
-
+  const fetchGroups = async () => {
+    try {
+      const response = await axios.get('/api/groups');
+      setGroups(response.data);
+    } catch (error) {
+      console.error('Failed to fetch groups:', error);
+    }
+  };
 
     
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string) => {
