@@ -64,11 +64,15 @@ const ManageUsersAdminSu = () => {
   };
   
 
-    const deleteRow = (id: number) => {
-        const updatedUsers = users.filter(user => user.id !== id);
-        setUsers(updatedUsers);
-    };
-
+  const deleteRow = async (id: number) => {
+    try {
+      await axios.delete('/api/members', { data: { id } });
+      setUsers(users.filter(user => user.id !== id));
+    } catch (error) {
+      console.error('Failed to delete user:', error);
+    }
+  };
+  
     const renderTable = () => {
         return users.map(user => (
             <tr key={user.id}>
