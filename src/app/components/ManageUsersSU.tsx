@@ -1,31 +1,34 @@
 "use client";
 
-import { ChangeEvent, SetStateAction, useState } from 'react';
+import { ChangeEvent, useState, useEffect } from 'react';
+import axios from 'axios';
+
+interface User {
+  id: number;
+  firstName: string;
+  lastName: string;
+  matricno: string;
+  email: string;
+  role: string;
+}
+
 
 const ManageUsersAdminSu = () => {
-    const [tasks, setTasks] = useState([
-        {
-            id: 1,
-            name: 'Space Dad',
-            status: 'Admin',
-        },
-    ]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [editUser, setEditUser] = useState<Partial<User>>({});
 
-    const [newTaskName, setNewTaskName] = useState('');
-    const [editingTask, setEditingTask] = useState<number | null>(null);
-    const [editingName, setEditingName] = useState('');
-    const [editingStatus, setEditingStatus] = useState('');
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
-    const handleAddTask = () => {
-        if (newTaskName.trim() === '') return;
-        const newTask = {
-            id: tasks.length + 1,
-            name: newTaskName,
-            status: 'Edit Group',
-        };
-        setTasks([...tasks, newTask]);
-        setNewTaskName('');
-    };
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get('/api/members');
+      setUsers(response.data);
+    } catch (error) {
+      console.error('Failed to fetch users:', error);
+    }
+  };
 
 
 
