@@ -2,6 +2,7 @@
 
 import { useEffect, useState, ChangeEvent } from 'react';
 import axios from 'axios';
+import Select from 'react-select';
 
 interface Project {
   id: number;
@@ -22,7 +23,7 @@ const Projects = () => {
   const [projects, setProjects] = useState<Project[]>([]);
   const [members, setMembers] = useState<Member[]>([]);
   const [editProject, setEditProject] = useState<Partial<Project>>({});
-  const [newProject, setNewProject] = useState<Partial<Project>>({});
+  const [newProject, setNewProject] = useState<Partial<Project>>({ members: [] });
 
   useEffect(() => {
     fetchProjects();
@@ -47,7 +48,7 @@ const Projects = () => {
     }
   };
 
-  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLSelectElement>, field: string, isEdit: boolean) => {
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement>, field: string, isEdit: boolean) => {
     const value = e.target.value;
     if (isEdit) {
       setEditProject(prevState => ({ ...prevState, [field]: value }));
@@ -56,18 +57,12 @@ const Projects = () => {
     }
   };
 
-  const handleMembersChange = (e: ChangeEvent<HTMLSelectElement>, isEdit: boolean) => {
-    const value = parseInt(e.target.value);
+  const handleMembersChange = (selectedOptions: any, isEdit: boolean) => {
+    const selectedMembers = selectedOptions.map((option: any) => option.value);
     if (isEdit) {
-      setEditProject(prevState => ({
-        ...prevState,
-        members: prevState.members ? [...prevState.members, value] : [value],
-      }));
+      setEditProject(prevState => ({ ...prevState, members: selectedMembers }));
     } else {
-      setNewProject(prevState => ({
-        ...prevState,
-        members: prevState.members ? [...prevState.members, value] : [value],
-      }));
+      setNewProject(prevState => ({ ...prevState, members: selectedMembers }));
     }
   };
 
@@ -75,7 +70,7 @@ const Projects = () => {
     try {
       const response = await axios.post('/api/projects', newProject);
       setProjects([...projects, response.data]);
-      setNewProject({});
+      setNewProject({ members: [] });
     } catch (error) {
       console.error('Failed to add project:', error);
     }
@@ -139,24 +134,21 @@ const Projects = () => {
               />
             </td>
             <td className="py-3 px-2">
-              <select
-                className="bg-white/5 rounded-md text-white w-20"
-                value={editProject.members ? editProject.members[0] : ''}
-                onChange={(e) => handleMembersChange(e, true)}
-              >
-                <option value="" disabled>Select Member</option>
-                {members.map(member => (
-                  <option key={member.id} value={member.id}>
-                    {member.firstName} {member.lastName}
-                  </option>
-                ))}
-              </select>
+              <Select
+                isMulti
+                options={members.map(member => ({ value: member.id, label: `${member.firstName} ${member.lastName}` }))}
+                value={editProject.members?.map(memberId => {
+                  const member = members.find(member => member.id === memberId);
+                  return member ? { value: member.id, label: `${member.firstName} ${member.lastName}` } : null;
+                })}
+                onChange={(selectedOptions) => handleMembersChange(selectedOptions, true)}
+              />
             </td>
             <td className="py-3 px-2 text-right">
               <button onClick={() => saveProjectRow(project.id)} className="px-2 py-1">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" className="hover:text-green-500 w-5 h-5 bi bi-floppy" viewBox="0 0 16 16">
                   <path d="M11 2H9v3h2z" />
-                  <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z" />
+                  <path d="M1.5 0h11.586a1.5.5 0 0 1 1.06.44l1.415 1.414A1.5.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v4.5A1.5 1.5 0 0 1 11.5 7h-7A1.5 1.5 0 0 1 3 5.5V1H1.5a.5.5 0 0 0-.5.5m3 4a.5.5 0 0 0 .5.5h7a.5.5 0 0 0 .5-.5V1H4zM3 15h10v-4.5a.5.5 0 0 0-.5-.5h-9a.5.5 0 0 0-.5.5z" />
                 </svg>
               </button>
             </td>
@@ -240,18 +232,15 @@ const Projects = () => {
           onChange={(e) => handleInputChange(e, 'endDate', false)}
           placeholder="End Date"
         />
-        <select
-          className="bg-white/5 rounded-md text-white w-20 mr-2"
-          value={newProject.members ? newProject.members[0] : ''}
-          onChange={(e) => handleMembersChange(e, false)}
-        >
-          <option value="" disabled>Select Member</option>
-          {members.map(member => (
-            <option key={member.id} value={member.id}>
-              {member.firstName} {member.lastName}
-            </option>
-          ))}
-        </select>
+        <Select
+          isMulti
+          options={members.map(member => ({ value: member.id, label: `${member.firstName} ${member.lastName}` }))}
+          value={newProject.members?.map(memberId => {
+            const member = members.find(member => member.id === memberId);
+            return member ? { value: member.id, label: `${member.firstName} ${member.lastName}` } : null;
+          })}
+          onChange={(selectedOptions) => handleMembersChange(selectedOptions, false)}
+        />
         <button onClick={addProject} className="px-4 py-1 bg-black text-white rounded-lg">Add Project</button>
       </div>
     </div>
