@@ -169,7 +169,7 @@ const Projects = () => {
             <td className="py-3 px-2">{new Date(project.startDate).toLocaleDateString()}</td>
             <td className="py-3 px-2">{project.endDate ? new Date(project.endDate).toLocaleDateString() : 'N/A'}</td>
             <td className="py-3 px-2">
-              {project.members.map(memberId => {
+              {(project.members ?? []).map(memberId => {
                 const member = members.find(member => member.id === memberId);
                 return member ? `${member.firstName} ${member.lastName}` : '';
               }).join(', ')}
