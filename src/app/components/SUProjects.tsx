@@ -207,42 +207,45 @@ const Projects = () => {
           </tbody>
         </table>
       </div>
-      <div className="mt-4 space-y-2">
-        <input
-          className="bg-white/5 rounded-md text-white w-full p-2"
-          value={newProject.title || ''}
-          onChange={(e) => handleInputChange(e, 'title', false)}
-          placeholder="Title"
-        />
-        <input
-          className="bg-white/5 rounded-md text-white w-full p-2"
-          value={newProject.description || ''}
-          onChange={(e) => handleInputChange(e, 'description', false)}
-          placeholder="Description"
-        />
-        <input
-          className="bg-white/5 rounded-md text-white w-full p-2"
-          value={newProject.startDate || ''}
-          onChange={(e) => handleInputChange(e, 'startDate', false)}
-          placeholder="Start Date"
-        />
-        <input
-          className="bg-white/5 rounded-md text-white w-full p-2"
-          value={newProject.endDate || ''}
-          onChange={(e) => handleInputChange(e, 'endDate', false)}
-          placeholder="End Date"
-        />
-        <Select
-          isMulti
-          options={members.map(member => ({ value: member.id, label: `${member.firstName} ${member.lastName}` }))}
-          value={newProject.members?.map(memberId => {
-            const member = members.find(member => member.id === memberId);
-            return member ? { value: member.id, label: `${member.firstName} ${member.lastName}` } : null;
-          })}
-          onChange={(selectedOptions) => handleMembersChange(selectedOptions, false)}
-          className="text-black"
-        />
-        <button onClick={addProject} className="px-4 py-2 bg-black text-white rounded-lg">Add Project</button>
+      <div className="mt-4">
+        <h2 className="font-bold py-2">Add New Project</h2>
+        <div className="space-y-2">
+          <input
+            className="bg-white/5 rounded-md text-white w-full p-2"
+            value={newProject.title || ''}
+            onChange={(e) => handleInputChange(e, 'title', false)}
+            placeholder="Title"
+          />
+          <input
+            className="bg-white/5 rounded-md text-white w-full p-2"
+            value={newProject.description || ''}
+            onChange={(e) => handleInputChange(e, 'description', false)}
+            placeholder="Description"
+          />
+          <input
+            className="bg-white/5 rounded-md text-white w-full p-2"
+            value={newProject.startDate || ''}
+            onChange={(e) => handleInputChange(e, 'startDate', false)}
+            placeholder="Start Date"
+          />
+          <input
+            className="bg-white/5 rounded-md text-white w-full p-2"
+            value={newProject.endDate || ''}
+            onChange={(e) => handleInputChange(e, 'endDate', false)}
+            placeholder="End Date"
+          />
+          <Select
+            isMulti
+            options={members.map(member => ({ value: member.id, label: `${member.firstName} ${member.lastName}` }))}
+            value={newProject.members?.map(memberId => {
+              const member = members.find(member => member.id === memberId);
+              return member ? { value: member.id, label: `${member.firstName} ${member.lastName}` } : null;
+            })}
+            onChange={(selectedOptions) => handleMembersChange(selectedOptions, false)}
+            className="text-black"
+          />
+          <button onClick={addProject} className="px-4 py-2 bg-black text-white rounded-lg">Add Project</button>
+        </div>
       </div>
     </div>
   );
