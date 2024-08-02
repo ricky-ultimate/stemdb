@@ -10,7 +10,7 @@ interface Project {
   description: string;
   startDate: string;
   endDate?: string;
-  members: number[];
+  members: Member[];
 }
 
 interface Member {
@@ -58,7 +58,7 @@ const Projects = () => {
   };
 
   const handleMembersChange = (selectedOptions: any, isEdit: boolean) => {
-    const selectedMembers = selectedOptions.map((option: any) => option.value);
+    const selectedMembers = selectedOptions.map((option: any) => members.find(member => member.id === option.value));
     if (isEdit) {
       setEditProject(prevState => ({ ...prevState, members: selectedMembers }));
     } else {
@@ -68,7 +68,10 @@ const Projects = () => {
 
   const addProject = async () => {
     try {
-      const response = await axios.post('/api/projects', newProject);
+      const response = await axios.post('/api/projects', {
+        ...newProject,
+        members: newProject.members?.map(member => member.id)
+      });
       setProjects([...projects, response.data]);
       setNewProject({ members: [] });
     } catch (error) {
@@ -82,7 +85,11 @@ const Projects = () => {
 
   const saveProjectRow = async (id: number) => {
     try {
-      const response = await axios.put('/api/projects', { id, ...editProject });
+      const response = await axios.put('/api/projects', {
+        id,
+        ...editProject,
+        members: editProject.members?.map(member => member.id)
+      });
       setProjects(projects.map(project => (project.id === id ? response.data : project)));
       setEditProject({});
     } catch (error) {
@@ -137,10 +144,10 @@ const Projects = () => {
               <Select
                 isMulti
                 options={members.map(member => ({ value: member.id, label: `${member.firstName} ${member.lastName}` }))}
-                value={editProject.members?.map(memberId => {
-                  const member = members.find(member => member.id === memberId);
-                  return member ? { value: member.id, label: `${member.firstName} ${member.lastName}` } : null;
-                })}
+                value={editProject.members?.map(member => ({
+                  value: member.id,
+                  label: `${member.firstName} ${member.lastName}`
+                }))}
                 onChange={(selectedOptions) => handleMembersChange(selectedOptions, true)}
               />
             </td>
@@ -161,10 +168,7 @@ const Projects = () => {
             <td className="py-3 px-2">{new Date(project.startDate).toLocaleDateString()}</td>
             <td className="py-3 px-2">{project.endDate ? new Date(project.endDate).toLocaleDateString() : 'N/A'}</td>
             <td className="py-3 px-2">
-              {(project.members ?? []).map(memberId => {
-                const member = members.find(member => member.id === memberId);
-                return member ? `${member.firstName} ${member.lastName}` : '';
-              }).join(', ')}
+              {project.members.map(member => `${member.firstName} ${member.lastName}`).join(', ')}
             </td>
             <td className="py-3 px-2 text-right">
               <button onClick={() => editProjectRow(project)} className="px-2 py-1">
@@ -207,7 +211,7 @@ const Projects = () => {
           </tbody>
         </table>
       </div>
-      <div className="mt-20">
+      <div className="mt-10">
         <h2 className="font-bold py-2">Add New Project</h2>
         <div className="space-y-2">
           <input
