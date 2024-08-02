@@ -1,10 +1,7 @@
-import Link from 'next/link';
 import Head from 'next/head';
 import { Metadata } from 'next';
-import Statistics from '@/app/components/Statistics';
-import Menu from '@/app/components/UserMenu';
+
 import UserProfile from '@/app/components/profile';
-import ManageUsersAdminSu from '@/app/components/ManageUsersSU';
 import MenuSU from '@/app/components/SUMenu';
 
 

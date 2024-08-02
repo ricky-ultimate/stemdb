@@ -14,7 +14,7 @@ async function main() {
       matricno: '111222',
       email: 'cele@cele.com',
       password: hashedPassword, // Store hashed password
-      role: 'USER',
+      role: 'SUPERADMIN',
     },
   });
 
